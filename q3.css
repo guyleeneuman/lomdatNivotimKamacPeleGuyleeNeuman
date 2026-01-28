@@ -78,13 +78,13 @@ body {
 .instructions{
     position: absolute;
     top: 16%;
-    left: 2%
+    left: 0%
 }
 
 .q1 {
     position: absolute;
-    top: 20%;
-    left: 5%;
+    top: 21%;
+    left: 2%;
 }
 
 .options {
@@ -132,8 +132,9 @@ body {
 
 .nextQ {
     position: absolute;
-    top: 78%;
-    right: 45%;
+    top: 81%;
+    right: 30%;
+    width: 70%;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 

@@ -77,25 +77,25 @@ body {
 
 .instructions{
     position: absolute;
-    top: 15%;
-    left: 5%
+    top: 16%;
+    left: 0%
 }
 
 .q1 {
     position: absolute;
-    top: 19%;
-    left: 8%;
+    top: 21%;
+    left: 2%;
 }
 
 .options {
     position: absolute;
-    top: 32%;
-    left: 11%;
+    top: 31%;
+    left: 3%;
 }
 
 .radioGroup {
   position: absolute;
-  top: 34%;
+  top: 33%;
   left: 87%;
   display: flex;
   flex-direction: column;
@@ -133,7 +133,7 @@ body {
 .nextQ {
     position: absolute;
     top: 86%;
-    right: 40%;
+    right: 43%;
     width: 55%;
     transition: transform 0.3s ease, filter 0.3s ease;
 }

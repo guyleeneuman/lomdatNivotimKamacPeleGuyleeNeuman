@@ -84,19 +84,19 @@ body {
 .instructions{
     position: absolute;
     top: 17%;
-    left: 5%
+    left: 0%
 }
 
 .chartTop {
     position: absolute;
     top: 40%;
-    left: 7%
+    left: 3%
 }
 
 .chartBottom {
     position: absolute;
     top: 050%;
-    left: 3%
+    left: 0%
 }
 
 .options {

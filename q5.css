@@ -84,13 +84,13 @@ body {
 .instructions{
     position: absolute;
     top: 16%;
-    left: 5%
+    left: 0%
 }
 
 .chartTop {
     position: absolute;
     top: 55%;
-    left: -34%
+    left: -39%
 }
 
 .chartBottom {

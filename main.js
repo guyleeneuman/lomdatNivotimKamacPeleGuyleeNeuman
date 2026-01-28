@@ -508,13 +508,13 @@ function goToNextQuestionQ7() {
   window.location.href = "result.html"; // העמוד הבא
 }
 
-// ===== Q6 Drag & Drop Logic =====
+// ===== Q6 Drag & Drop Logic (Desktop + Mobile) =====
 const cubeTags = document.querySelectorAll('[class^="cubeTag"]');
 const textBlobs = document.querySelectorAll('[class^="textBlob"]');
 
 let draggedCube = null;
 
-// שמירת מיקומים התחלתיים
+// ===== שמירת מיקומים התחלתיים =====
 const initialPositions = new Map();
 cubeTags.forEach(cube => {
   initialPositions.set(cube, {
@@ -523,14 +523,12 @@ cubeTags.forEach(cube => {
   });
 });
 
-// מי יושב על איזה blob
+// ===== מי יושב על איזה blob =====
 const blobOccupancy = {};
 
-// התחלת גרירה
+// ===== Desktop Drag =====
 cubeTags.forEach(cube => {
   const cubeNum = parseInt(cube.className.replace("cubeTag", ""));
-
-  // cubeTag5 ו-cubeTag6 לא ניתנים לגרירה
   if (cubeNum === 5 || cubeNum === 6) return;
 
   cube.setAttribute("draggable", true);
@@ -540,49 +538,105 @@ cubeTags.forEach(cube => {
   });
 });
 
-// מאפשרים זריקה על textBlob + החלפה חכמה
 textBlobs.forEach(blob => {
   blob.addEventListener("dragover", e => e.preventDefault());
 
   blob.addEventListener("drop", () => {
     if (!draggedCube) return;
-
-    const blobName = blob.className;
-
-    // אם יש קובייה אחרת על ה־blob – מחזירים אותה למקום
-    if (blobOccupancy[blobName] && blobOccupancy[blobName] !== draggedCube) {
-      const prevCube = blobOccupancy[blobName];
-      returnCubeToStart(prevCube);
-      prevCube.dataset.attachedTo = "";
-    }
-
-    // אם הקובייה נשלפה מ־blob אחר – מנקים משם
-    if (draggedCube.dataset.attachedTo) {
-      blobOccupancy[draggedCube.dataset.attachedTo] = null;
-    }
-
-    // מצמידים למרכז ה־blob
-    const blobRect = blob.getBoundingClientRect();
-    draggedCube.style.left = blobRect.left + blobRect.width / 2 - draggedCube.offsetWidth / 2 + "px";
-    draggedCube.style.top = blobRect.top + blobRect.height / 2 - draggedCube.offsetHeight / 2 + "px";
-
-    draggedCube.dataset.attachedTo = blobName;
-    blobOccupancy[blobName] = draggedCube;
-
-    saveQ6State();
+    attachCubeToBlob(draggedCube, blob);
+    draggedCube = null;
   });
 });
 
-// החזרת קובייה למקום המקורי
+// ===== Mobile Touch Drag =====
+cubeTags.forEach(cube => {
+  const cubeNum = parseInt(cube.className.replace("cubeTag", ""));
+  if (cubeNum === 5 || cubeNum === 6) return;
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  cube.addEventListener("touchstart", e => {
+    const touch = e.touches[0];
+    const rect = cube.getBoundingClientRect();
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
+    draggedCube = cube;
+  });
+
+  cube.addEventListener("touchmove", e => {
+    if (!draggedCube) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    cube.style.left = touch.clientX - offsetX + "px";
+    cube.style.top  = touch.clientY - offsetY + "px";
+  });
+
+  cube.addEventListener("touchend", () => {
+    if (!draggedCube) return;
+
+    let dropped = false;
+    const cubeRect = draggedCube.getBoundingClientRect();
+
+    textBlobs.forEach(blob => {
+      const blobRect = blob.getBoundingClientRect();
+      const isInside =
+        cubeRect.left < blobRect.right &&
+        cubeRect.right > blobRect.left &&
+        cubeRect.top < blobRect.bottom &&
+        cubeRect.bottom > blobRect.top;
+
+      if (isInside) {
+        attachCubeToBlob(draggedCube, blob);
+        dropped = true;
+      }
+    });
+
+    if (!dropped) {
+      returnCubeToStart(draggedCube);
+    }
+
+    draggedCube = null;
+  });
+});
+
+// ===== הצמדת קובייה ל־Blob (משותף לדסקטופ + מובייל) =====
+function attachCubeToBlob(cube, blob) {
+  const blobName = blob.className;
+
+  // אם blob תפוס – מחזירים את הקובייה הקודמת
+  if (blobOccupancy[blobName] && blobOccupancy[blobName] !== cube) {
+    returnCubeToStart(blobOccupancy[blobName]);
+    blobOccupancy[blobName].dataset.attachedTo = "";
+  }
+
+  // ניקוי blob קודם של הקובייה
+  if (cube.dataset.attachedTo) {
+    blobOccupancy[cube.dataset.attachedTo] = null;
+  }
+
+  // הצמדה למרכז
+  const blobRect = blob.getBoundingClientRect();
+  cube.style.left =
+    blobRect.left + blobRect.width / 2 - cube.offsetWidth / 2 + "px";
+  cube.style.top =
+    blobRect.top + blobRect.height / 2 - cube.offsetHeight / 2 + "px";
+
+  cube.dataset.attachedTo = blobName;
+  blobOccupancy[blobName] = cube;
+
+  saveQ6State();
+}
+
+// ===== החזרת קובייה למקום =====
 function returnCubeToStart(cube) {
   const cubeNum = parseInt(cube.className.replace("cubeTag", ""));
-  
-  // cubeTag5 ו-cubeTag6 נשארים במקומם
   if (cubeNum === 5 || cubeNum === 6) return;
 
   const pos = initialPositions.get(cube);
   cube.style.left = pos.left;
   cube.style.top = pos.top;
+  cube.dataset.attachedTo = "";
 }
 
 // ===== שמירת מצב Q6 =====
@@ -592,12 +646,12 @@ function saveQ6State() {
   cubeTags.forEach(cube => {
     if (cube.dataset.attachedTo) {
       const cubeNum = parseInt(cube.className.replace("cubeTag", ""));
-      const isCorrect = cubeNum >= 1 && cubeNum <= 8;
+      const validBlobs = ["textBlob1", "textBlob2", "textBlob3", "textBlob4", "textBlob5"];
 
       result.push({
         cube: cube.className,
         attachedTo: cube.dataset.attachedTo,
-        isCorrect: isCorrect
+        isCorrect: validBlobs.includes(cube.dataset.attachedTo) && cubeNum !== 5 && cubeNum !== 6
       });
     }
   });
@@ -605,6 +659,7 @@ function saveQ6State() {
   sessionStorage.setItem("q6Results", JSON.stringify(result));
   console.log("Q6 saved:", result);
 }
+
 // ===== חישוב ניקוד Q6 =====
 function calcQ6Score() {
   const maxScore = 5; // סך הנקודות של Q6
@@ -1048,8 +1103,8 @@ function calcQ51Score() {
 // =======================
 
 (() => {
-  // 🚨 אם אנחנו לא בעמוד Q7 – יוצאים
   if (!document.getElementById("timerQ7")) return;
+
   // ---------- CONFIG ----------
   const totalSteps = 10;
 
@@ -1075,7 +1130,7 @@ function calcQ51Score() {
   const circles = document.querySelectorAll(".circle-outline");
   const nextBtn = document.querySelector(".nextQ7");
 
-  // Save original positions for reset
+  // ---------- ORIGINAL POSITIONS ----------
   const originalPositions = {};
   cubes.forEach(cube => {
     originalPositions[cube.classList[0]] = {
@@ -1084,66 +1139,122 @@ function calcQ51Score() {
     };
   });
 
-// ---------- DRAG LOGIC פשוט לשינוי בחירה ----------
-cubes.forEach(cube => {
-  cube.draggable = true;
+  // ==================================================
+  // =============== DESKTOP DRAG =====================
+  // ==================================================
+  cubes.forEach(cube => {
+    cube.draggable = true;
 
-  cube.addEventListener("dragstart", () => {
-    draggedCube = cube;
-
-    // מחזירים את הקובייה למקום המקורי בכל גרירה חדשה
-    const key = draggedCube.classList[0];
-    draggedCube.style.left = originalPositions[key].left;
-    draggedCube.style.top = originalPositions[key].top;
-    draggedCube.style.zIndex = 10000;
+    cube.addEventListener("dragstart", () => {
+      draggedCube = cube;
+      resetCubePosition(cube);
+      cube.style.zIndex = 10000;
+    });
   });
-});
 
-circles.forEach(circle => {
-  circle.addEventListener("dragover", e => e.preventDefault());
-
-  circle.addEventListener("drop", () => {
-    if (!draggedCube) return;
-
-    const rect = circle.getBoundingClientRect();
-    draggedCube.style.position = "absolute";
-    draggedCube.style.left = rect.left + "px";
-    draggedCube.style.top = rect.top + "px";
-
-    // נשמור את הבחירה האחרונה
-    lastDroppedCubeId = draggedCube.classList[0];
-  });
-});
-
-  // ---------- STEP LOGIC ----------
- function highlightCurrentCircle() {
   circles.forEach(circle => {
-    circle.style.display = "none";     // מסתירים את כולם
-    circle.style.borderColor = "#FFEBCD";
-    circle.style.background = "transparent"; // נשאר חלול
+    circle.addEventListener("dragover", e => e.preventDefault());
+
+    circle.addEventListener("drop", () => {
+      if (!draggedCube) return;
+      attachCubeToCircle(draggedCube, circle);
+      draggedCube = null;
+    });
   });
 
-  const activeCircle = document.getElementById(`c${currentStep}`);
-  if (activeCircle) {
-    activeCircle.style.display = "block"; // מציגים רק את הרלוונטי
-  }
-}
+  // ==================================================
+  // =============== MOBILE TOUCH =====================
+  // ==================================================
+  cubes.forEach(cube => {
+    let offsetX = 0;
+    let offsetY = 0;
 
-  function resetCubes() {
-    cubes.forEach(cube => {
-      const key = cube.classList[0];
-      cube.style.top = originalPositions[key].top;
-      cube.style.left = originalPositions[key].left;
+    cube.addEventListener("touchstart", e => {
+      const touch = e.touches[0];
+      const rect = cube.getBoundingClientRect();
+      offsetX = touch.clientX - rect.left;
+      offsetY = touch.clientY - rect.top;
+
+      draggedCube = cube;
+      resetCubePosition(cube);
+      cube.style.zIndex = 10000;
     });
 
+    cube.addEventListener("touchmove", e => {
+      if (!draggedCube) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      cube.style.left = touch.clientX - offsetX + "px";
+      cube.style.top  = touch.clientY - offsetY + "px";
+    });
+
+    cube.addEventListener("touchend", () => {
+      if (!draggedCube) return;
+
+      let dropped = false;
+      const cubeRect = draggedCube.getBoundingClientRect();
+
+      circles.forEach(circle => {
+        const rect = circle.getBoundingClientRect();
+        const inside =
+          cubeRect.left < rect.right &&
+          cubeRect.right > rect.left &&
+          cubeRect.top < rect.bottom &&
+          cubeRect.bottom > rect.top;
+
+        if (inside) {
+          attachCubeToCircle(draggedCube, circle);
+          dropped = true;
+        }
+      });
+
+      if (!dropped) {
+        resetCubePosition(draggedCube);
+      }
+
+      draggedCube = null;
+    });
+  });
+
+  // ==================================================
+  // =============== HELPERS ==========================
+  // ==================================================
+  function attachCubeToCircle(cube, circle) {
+    const rect = circle.getBoundingClientRect();
+    cube.style.position = "absolute";
+    cube.style.left = rect.left + "px";
+    cube.style.top = rect.top + "px";
+    lastDroppedCubeId = cube.classList[0];
+  }
+
+  function resetCubePosition(cube) {
+    const key = cube.classList[0];
+    cube.style.left = originalPositions[key].left;
+    cube.style.top = originalPositions[key].top;
+  }
+
+  // ==================================================
+  // =============== STEP LOGIC =======================
+  // ==================================================
+  function highlightCurrentCircle() {
+    circles.forEach(circle => {
+      circle.style.display = "none";
+      circle.style.borderColor = "#FFEBCD";
+      circle.style.background = "transparent";
+    });
+
+    const active = document.getElementById(`c${currentStep}`);
+    if (active) active.style.display = "block";
+  }
+
+  function resetCubes() {
+    cubes.forEach(resetCubePosition);
     lastDroppedCubeId = null;
   }
 
   function saveStepResult() {
     const circleId = `c${currentStep}`;
-    const correctCube = correctAnswers[circleId];
-
-    const isCorrect = lastDroppedCubeId === correctCube;
+    const isCorrect = lastDroppedCubeId === correctAnswers[circleId];
 
     sessionStorage.setItem(
       `Q7_step_${currentStep}`,
@@ -1154,33 +1265,32 @@ circles.forEach(circle => {
       })
     );
   }
-// ---------- NEXT BUTTON SAFE ----------
-const cleanNextBtn = nextBtn.cloneNode(true);
-nextBtn.parentNode.replaceChild(cleanNextBtn, nextBtn);
 
-  // ---------- NEXT BUTTON ----------
-cleanNextBtn.addEventListener("click", () => {
-  saveStepResult();
+  // ---------- NEXT BUTTON SAFE ----------
+  const cleanNextBtn = nextBtn.cloneNode(true);
+  nextBtn.parentNode.replaceChild(cleanNextBtn, nextBtn);
 
-  if (currentStep === totalSteps) {
-    window.location.href = "result.html";
-    return;
-  }
+  cleanNextBtn.addEventListener("click", () => {
+    saveStepResult();
 
-  if (currentStep === totalSteps - 1) {
-    cleanNextBtn.src = "assets/buttons/checkWrongBtn.png";
-  }
+    if (currentStep === totalSteps) {
+      window.location.href = "result.html";
+      return;
+    }
 
-  currentStep++;
-  resetCubes();
-  highlightCurrentCircle();
-});
+    if (currentStep === totalSteps - 1) {
+      cleanNextBtn.src = "assets/buttons/checkWrongBtn.png";
+    }
 
+    currentStep++;
+    resetCubes();
+    highlightCurrentCircle();
+  });
 
   // ---------- INIT ----------
   highlightCurrentCircle();
-
 })();
+
 // ===== חישוב ניקוד Q7 =====
 function calcQ7Score() {
   const pointsPerCorrectDrag = 3;

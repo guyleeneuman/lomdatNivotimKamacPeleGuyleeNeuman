@@ -68,9 +68,9 @@ body {
 
 .nextQ {
     position: absolute;
-    top: 78%;
-    right: 9%;
-    width: 80%;
+    top: 85%;
+    right: 11%;
+    width: 70%;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -99,35 +99,35 @@ body {
 
 .q3 {
     position: absolute;
-    top: 43%;
+    top: 44%;
     left: 40%;
     color: #014725;
 }
 
 .q4 {
     position: absolute;
-    top: 51%;
+    top: 53%;
     left: 40%;
     color: #014725;
 }
 
 .q5 {
     position: absolute;
-    top: 60%;
+    top: 63%;
     left: 40%;
     color: #014725;
 }
 
 .q6 {
     position: absolute;
-    top: 68%;
+    top: 73%;
     left: 40%;
     color: #014725;
 }
 
 .q7 {
     position: absolute;
-    top: 76%;
+    top: 81%;
     left: 40%;
     color: #014725;
 }

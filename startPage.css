@@ -53,14 +53,14 @@ body {
     position: absolute;
     align-items: center;
     top: 15%;
-    right: 9%
+    right: 4%
 }
 
 .button {
     position: absolute;
     align-items: center;
     top: 70%;
-    right: 12%;
+    right: 10%;
     cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
@@ -78,7 +78,7 @@ body {
     position: absolute;
     align-items: center;
     top: 95%;
-    right: 9%;
+    right: 5%;
 }
 
 .dustBall {

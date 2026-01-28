@@ -56,7 +56,7 @@ body {
 
 .qTitle {
     position: absolute;
-    right: 2%;
+    right: 0%;
     top: 6%;
 }
 
@@ -77,14 +77,14 @@ body {
 
 .instructions{
     position: absolute;
-    top: 15%;
-    left: 9%
+    top: 16%;
+    left: 0%
 }
 
 .q1 {
     position: absolute;
-    top: 19%;
-    left: 12%;
+    top: 21%;
+    left: 2%;
 }
 
 .options {
@@ -132,8 +132,9 @@ body {
 
 .nextQ {
     position: absolute;
-    top: 78%;
-    right: 45%;
+    top: 81%;
+    right: 30%;
+    width: 70%;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
