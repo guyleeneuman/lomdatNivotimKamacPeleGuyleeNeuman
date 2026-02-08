@@ -92,20 +92,20 @@ body {
 
 .button {
     position: absolute;
-    align-items: center;
-    top: 86%;
-    right: 11%;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
     cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .button:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
 }
 
 .button:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
 }
 
 .peleIcon:hover {
@@ -115,11 +115,17 @@ body {
 .over {
     position: absolute;
     top: 72%;
-    left: 16%;
+    left: 50%;
+    transform: translateX(-50%);
     cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .over:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+}
+
+.over:active {
+    transform: translateX(-50%) scale(0.95);
 }

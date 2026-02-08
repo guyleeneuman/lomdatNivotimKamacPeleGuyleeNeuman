@@ -56,54 +56,122 @@ body {
 
 .qTitle {
     position: absolute;
-    right: 0%;
     top: 6%;
+    left: 75%;
+    transform: translateX(-50%);
 }
 
 .timerBlob {
     position: absolute;
     right: 70%;
-    top: 8%;
+    top: 10%;
+    height:7%;
 }
 
 #timerQ2 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #F5CC8E;
   margin-bottom: 20px;
   position: absolute;
-  right: 72.8%;
-  top: 8.5%;
+  right: 72.5%;
+  top: 10.5%;
 }
 
 .instructions{
     position: absolute;
-    top: 16%;
-    left: 0%
+    top: 17%;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
 
 .nextQ {
     position: absolute;
-    top: 76%;
-    right: 18%;
+    top: 83%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    width: 60%;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .nextQ:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
 }
 
 .nextQ:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
+}
+
+.matzpen-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(80vw, 400px); /* רספונסיבי */
 }
 
 .matzpen {
-    position: absolute;
-    top: 28%;
-    left: 6%
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
-.answer1 { 
+.answer1,
+.answer2,
+.answer3,
+.answer4 {
+    position: absolute;
+}
+
+.answer1 {
+    top: 14%;
+    left: 40%;
+}
+
+.answer2 {
+    top: 38%;
+    left: 3%;
+}
+
+.answer3 {
+    top: 72%;
+    left: 40%;
+}
+
+.answer4 {
+    top: 84%;
+    left: 40%;
+}
+
+.answer1Input,
+.answer2Input,
+.answer3Input,
+.answer4Input {
+    width: 7rem;
+    padding: 6px 14px;
+    background-color: rgba(146, 125, 77, 0.7);
+    color: #FFEBCD;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    text-align: center;
+    outline: none;
+    width: 20%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.answer1Input::placeholder,
+.answer2Input::placeholder,
+.answer3Input::placeholder,
+.answer4Input::placeholder {
+    color: #FFEBCD;
+    opacity: 0.7;
+}
+
+
+/* .answer1 { 
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -273,10 +341,11 @@ body {
         font-size: 1rem;
         padding: 12px 15px;
     }
-}
+} */
 
 .steps {
     position: absolute;
     top: 95%;
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
 }

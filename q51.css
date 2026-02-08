@@ -57,72 +57,100 @@ body {
 .steps {
     position: absolute;
     top: 95%;
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .qTitle {
     position: absolute;
-    right: 0%;
     top: 6%;
+    left: 75%;
+    transform: translateX(-50%);
 }
 
 .timerBlob {
     position: absolute;
     right: 70%;
-    top: 8%;
+    top: 10%;
+    height:7%;
 }
 
 #timerQ51 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #F5CC8E;
   margin-bottom: 20px;
   position: absolute;
-  right: 72.8%;
-  top: 8.5%;
+  right: 72.5%;
+  top: 10.5%;
 }
 
 .instructions{
     position: absolute;
-    top: 17%;
-    left: 0%
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.chartTop {
+/* .chartTop {
     position: absolute;
     top: 40%;
     left: 3%
-}
+} */
 
-.chartBottom {
-    position: absolute;
-    top: 050%;
-    left: 0%
-}
-
-.options {
-    position: absolute;
-    top: 66%;
-    left: 7%
-
-}
 
 .nextQ {
     position: absolute;
-    top: 85%;
-    right: 28%;
-    width: 36%;
+    top: 86%;
+    left: 50%;
+    width: 30%;
+    transform: translateX(-50%);
+    cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
-    pointer-events: auto;
     z-index: 9999;
 }
 
 .nextQ:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
 }
 
 .nextQ:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
+}
+
+
+.chart-bottom-wrapper {
+    position: absolute;      /* יחסית אליו כל ה-blobs */
+    width: 90vw;             /* מתאים לרוחב מסך */
+    max-width: 800px;        /* מגבלת רוחב */
+    margin: 0 auto;          /* מרכז אופקי */
+    top: 51.8%;
+    left: 50%;              
+    transform: translateX(-50%);  /* מרכז אנכי סביב 70% */
+}
+
+/* הטבלה */
+.chartBottom {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* blobs מעל הטבלה */
+.textBlob7 {
+    position: absolute;
+    top: 49%;    /* יחסית לגובה wrapper */
+    left: 4.5%;
+    width: 32%;
+    height: auto;
+}
+
+.textBlob8 {
+    position: absolute;
+    top: 49.7%;
+    left: 34.4%;
+    width: 33.6%;
+    height: auto;
 }
 
 .answer4 { 
@@ -253,184 +281,46 @@ body {
     }
 }
 
-.cube1 {
+.options {
     position: absolute;
-    top: 67%;
-    left: 41%;
-    width: 50px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
+    top: 68%;
+    left: 70%;
+    transform: translateX(-50%);
 }
 
-.cube2 {
-    position: absolute;
-    top: 78%;
-    left: 9%;
-    width: 65px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-
-.cube3 {
-    position: absolute;
-    top: 72%;
-    left: 82%;
-    width: 50px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-
-}
-
-.cube4 {
-    position: absolute;
-    top: 72%;
-    left: 69%;
-    width: 50px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-
-}
-
-.cube5 {
-    position: absolute;
-    top: 72%;
-    left: 40%;
-    width: 120px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cube6 {
-    position: absolute;
-    top: 78%;
-    left: 64%;
-    width: 120px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cube7 {
-    position: absolute;
-    top: 78%;
-    left: 51%;
-    width: 50px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cube8 {
-    position: absolute;
-    top: 67%;
-    left: 11%;
-    width: 120px;
-    height: 50px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cube9 {
-    position: absolute;
-    top: 78%;
-    left: 26%;
-    width: 100px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-
-.cube1, .cube2, .cube3, .cube4, .cube5, .cube6, .cube7, .cube8, .cube9 {
+/* cubes יחסיים ל-options */
+[class^="cube"] {
   position: absolute;
+  width: 90vw;
+  background-color: #E3B06A;
+  color: #014725;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-align: center;
   cursor: grab;
- z-index: 10000000;
+  z-index: 1000000;
+  font-size: clamp(1rem, 1.3vw, 1.3rem); /* גודל פונטים יחסי למסך */
+  height: clamp(30px, 5%, 60px);          /* גובה יחסי ל-parent */
 }
 
-.textBlob7,.textBlob8 {
+/* מיקומים ורוחב – יחסיים ל-options */
+.cube1 { top: 82%; left: 5%;  width: clamp(50px, 10%, 70px);  }
+.cube2 { top: 73.5%; left: 2%;  width: clamp(60px, 12%, 80px); }
+.cube3 { top: 73.5%; left: 83%; width: clamp(50px, 10%, 70px); }
+.cube4 { top: 73.5%; left: 69%; width: clamp(50px, 10%, 70px); }
+.cube5 { top: 73.5%; left: 19%; width: clamp(80px, 12%, 150px); }
+.cube6 { top: 82%; left: 68%; width: clamp(100px, 18%, 150px); }
+.cube7 { top: 81%; left: 53%; width: clamp(50px, 10%, 70px); }
+.cube8 { top: 72%; left: 42%; width: clamp(100px, 20%, 160px); height: clamp(45px, 8%, 70px); }
+.cube9 { top: 81%; left: 23%; width: clamp(90px, 15%, 130px); }
+
+
+/* .textBlob7,.textBlob8 {
   position: absolute;
-}
+} */
 
 .zoom {
     transition: transform 0.4s ease;
@@ -469,14 +359,14 @@ body {
     position: absolute;
     width: 59%;
     left: 37%;
-    top: 25%;
+    top: 27%;
 }
 
 .qoardinatot {
     position: absolute;
     width: 69%;
     left: -17%;
-    top: 23%;
+    top: 25%;
     cursor: grab;
     touch-action: none;
 }
@@ -546,18 +436,6 @@ body {
     transform: translateX(50%) translateY(-5px);
 }
 
-.textBlob7 {
-    position: absolute;
-    top: 58.5%;
-    left: 7%;
-    height: 6.2.3%;
-    width: 29%;
-}
 
-.textBlob8 {
-    position: absolute;
-    top: 58.5%;
-    left: 34%;
-    height: 8.8%;
-    width: 32%;
-}
+
+

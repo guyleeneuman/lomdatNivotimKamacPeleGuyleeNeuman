@@ -58,239 +58,105 @@ body {
 .steps {
     position: absolute;
     top: 95%;
-    left: 11%;
-}
-
-.steps {
-    position: absolute;
-    top: 95%;
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .qTitle {
     position: absolute;
-    right: 0%;
     top: 6%;
+    left: 75%;
+    transform: translateX(-50%);
 }
 
 .timerBlob {
     position: absolute;
     right: 70%;
-    top: 8%;
+    top: 10%;
+    height:7%;
 }
 
 #timerQ7 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #F5CC8E;
   margin-bottom: 20px;
   position: absolute;
-  right: 72.8%;
-  top: 8.5%;
+  right: 72.5%;
+  top: 10.5%;
 }
 
 .instructions{
     position: absolute;
     top: 17%;
-    left: 0%
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nextQ7 {
     position: absolute;
-    top: 85%;
-    right: 28%;
-    width: 34%;
+    top: 86%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    width: 30%;
     transition: transform 0.3s ease, filter 0.3s ease;
+    z-index: 9999;
 }
 
 .nextQ7:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
 }
 
 .nextQ7:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
 }
 
 .options {
     position: absolute;
-    top: 65%;
-    left: 3%
+    top: 66%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .tazaQ7 {
-    position: absolute;
-    top: 26%;
-    right:0%;
+  position: absolute;
+  top: 26%;
+  right: 0%;
+  width: clamp(200px, 100%, 500px); /* רוחב משתנה לפי המסך */
+  height: auto;                     /* גובה נשמר לפי יחס התמונה */
+      left: 50%;
+    transform: translateX(-50%);
 }
 
-.cubeT1 {
-    position: absolute;
-    top: 77%;
-    left: 41%;
-    width: 60px;
-    height: 40px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
+[class^="cubeT"] {
+  position: absolute;
+  background-color: #E3B06A;
+  color: #014725;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  text-align: center;
+  cursor: grab;
+  z-index: 1000;
+
+  font-size: clamp(1rem, 1.3vw, 1.6rem); /* גודל פונטים רספונסיבי */
+  height: clamp(30px, 5%, 50px);          /* גובה יחסית ל-parent */
 }
 
-.cubeT2 {
-    position: absolute;
-    top: 75%;
-    left: 12%;
-    width: 120px;
-    height: 50px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-
-.cubeT3 {
-    position: absolute;
-    top: 70%;
-    left: 77%;
-    width: 60px;
-    height: 50px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-
-}
-
-.cubeT4 {
-    position: absolute;
-    top: 66%;
-    left: 43%;
-    width: 70px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-
-}
-
-.cubeT5 {
-    position: absolute;
-    top: 70.4%;
-    left: 45%;
-    width: 120px;
-    height: 40px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cubeT6 {
-    position: absolute;
-    top: 78%;
-    left: 79%;
-    width: 50px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cubeT7 {
-    position: absolute;
-    top: 78%;
-    left: 55.5%;
-    width: 100px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cubeT8 {
-    position: absolute;
-    top: 67%;
-    left: 13%;
-    width: 120px;
-    height: 50px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
-.cubeT9 {
-    position: absolute;
-    top: 75%;
-    left: 28%;
-    width: 100px;
-    height: 30px;
-    background-color: #E3B06A;
-    color: #014725;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: grab;
-    z-index: 2000;
-}
+/* מיקומים ורוחב – יחסיים ל-taza-container */
+.cubeT1  { top: 79%; left: 39%; width: clamp(50px, 8%, 70px); }
+.cubeT2  { top: 79%; left: 12%; width: clamp(100px, 16%, 120px); }
+.cubeT3  { top: 71%; left: 77%; width: clamp(50px, 8%, 70px); }
+.cubeT4  { top: 71%; left: 35%; width: clamp(60px, 10%, 70px); }
+.cubeT5  { top: 71%; left: 51%; width: clamp(100px, 16%, 120px); }
+.cubeT6  { top: 79%; left: 79%; width: clamp(45px, 8%, 50px); }
+.cubeT7  { top: 79%; left: 55.5%; width: clamp(90px, 15%, 100px); }
+.cubeT8  { top: 71%; left: 10%; width: clamp(100px, 18%, 120px); }
 
 .cube1, .cube2, .cube3, .cube4, .cube5, .cube6, .cube7, .cube8, .cube9 {
   position: absolute;
@@ -298,72 +164,25 @@ body {
  z-index: 10000000;
 }
 
+/* נקודות רספונסיביות */
 .circle-outline {
-  width: 15px;
-  height: 15px;
+  position: absolute;
+  width: clamp(12px, 1.5vw, 15px);
+  height: clamp(12px, 1.5vw, 15px);
   border-radius: 50%;
   border: 3px solid #FFEBCD;
   background: transparent;
-
-  box-shadow: 0 0 12px rgba(255, 235, 205, 0.8); /* glow עדין */
+  box-shadow: 0 0 12px rgba(255, 235, 205, 0.8);
 }
 
-#c1 {
-    position: absolute; 
-    top: 33.5%; 
-    left: 40%;
-}
-
-#c2 {
-    position: absolute; 
-    top: 34%; 
-    left: 64%;
-}
-
-#c3 {
-    position: absolute; 
-    top: 57%; 
-    left: 45.5%;
-}
-
-#c4 {
-    position: absolute; 
-    top: 45.5%; 
-    left: 58%;
-}
-
-#c5 {
-    position: absolute; 
-    top: 29%; 
-    left: 23%;
-}
-
-#c6 {
-    position: absolute; 
-    top: 41%; 
-    left: 14%;
-}
-
-#c7 {
-    position: absolute; 
-    top: 39%; 
-    left: 57%;
-}
-
-#c8 {
-    position: absolute; 
-    top: 50.5%; 
-    left: 73%;
-}
-
-#c9 {
-    position: absolute; 
-    top: 56%; 
-    left: 31%;
-}
-
-#c10 {
-    position: absolute; 
-    top: 30.5%; 
-    left: 67%;
-}
+/* מיקום נקודות יחסית למסך */
+#c1  { top: 33%; left: 38%; }
+#c2  { top: 33%; left: 65%; }
+#c3  { top: 60%; left: 45%; }
+#c4  { top: 46%; left: 58%; }
+#c5  { top: 28%; left: 18%; }
+#c6  { top: 41%; left: 11%; }
+#c7  { top: 40%; left: 55%; }
+#c8  { top: 52%; left: 75%; }
+#c9  { top: 58%; left: 29%; }
+#c10 { top: 29%; left: 67%; }

@@ -57,71 +57,91 @@ body {
 .steps {
     position: absolute;
     top: 95%;
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .qTitle {
     position: absolute;
-    right: 0%;
     top: 6%;
+    left: 75%;
+    transform: translateX(-50%);
 }
 
 .timerBlob {
     position: absolute;
     right: 70%;
-    top: 8%;
+    top: 10%;
+    height:7%;
 }
 
 #timerQ5 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #F5CC8E;
   margin-bottom: 20px;
   position: absolute;
-  right: 72.8%;
-  top: 8.5%;
+  right: 72.5%;
+  top: 10.5%;
 }
 
 .instructions{
     position: absolute;
-    top: 16%;
-    left: 0%
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
 
 .chartTop {
-    position: absolute;
-    top: 55%;
-    left: -39%
+    position: absolute;      
+    top: 60%;              
+    left: 50%;              
+    transform: translateX(-50%); 
 }
 
+/* 
 .chartBottom {
     position: absolute;
     top: 53%;
     left: 7%
-}
+} */
 
 .options {
     position: absolute;
     top: 66%;
-    left: 10.4%
-
+    left: 10.4%;
+        left: 50%;              
+    transform: translateX(-50%); 
 }
 
 .nextQ5 {
     position: absolute;
     top: 79%;
-    right: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    width: 50%;
     transition: transform 0.3s ease, filter 0.3s ease;
-    pointer-events: auto;
     z-index: 9999;
 }
 
 .nextQ5:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
 }
 
 .nextQ5:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
+}
+
+
+.chart-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    top: 68%;
+    z-index: 30;
 }
 
 .answerA { 
@@ -130,15 +150,15 @@ body {
     flex-direction: column;
     align-items: right;
     margin-top: 3px;
-    right: -18%;
-    top: 62%;
+    left: 50%;
+    transform: translateX(80px);
 }
 
 .answerAInput {
     position: relative;
     margin-top: 10px;              
     padding: 5px 15px;            
-    width: 25%;                      
+    width: 30%;                      
     max-width: 600px;              
     background-color: #FFEBCD;
     color: rgba(51, 102, 51, 0.7);            
@@ -147,7 +167,6 @@ body {
     font-size: 1.2rem;              
     text-align: center;            
     outline: none;   
-    left: 21%; 
     bottom: 0%;  
     height: 10%;             
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
@@ -167,21 +186,22 @@ body {
         padding: 12px 15px;
     }
 }
+
 .answerB { 
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: right;
     margin-top: 3px;
-    right: 11%;
-   top: 62%;
+    left: 50%;
+    transform: translateX(-40px);
 }
 
 .answerBInput {
     position: relative;
     margin-top: 10px;              
     padding: 5px 15px;            
-    width: 25%;                      
+    width: 30%;                      
     max-width: 600px;              
     background-color: #FFEBCD;
     color: rgba(51, 102, 51, 0.7);            
@@ -189,8 +209,7 @@ body {
     border-radius: 30px;             
     font-size: 1.2rem;              
     text-align: center;            
-    outline: none;   
-    left: 21%; 
+    outline: none;    
     bottom: 0%;  
     height: 10%;             
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
@@ -217,15 +236,15 @@ body {
     flex-direction: column;
     align-items: right;
     margin-top: 3px;
-    right: 45%;
-    top: 62%;
+    left: 50%;
+    transform: translateX(-160px);
 }
 
 .answerCInput {
     position: relative;
     margin-top: 10px;              
     padding: 5px 15px;            
-    width: 25%;                      
+    width: 30%;                      
     max-width: 600px;              
     background-color: #FFEBCD;
     color: rgba(51, 102, 51, 0.7);            
@@ -234,7 +253,6 @@ body {
     font-size: 1.2rem;              
     text-align: center;            
     outline: none;   
-    left: 21%; 
     bottom: 0%;  
     height: 10%;             
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
@@ -451,14 +469,14 @@ body {
     position: absolute;
     width: 59%;
     left: 37%;
-    top: 25%;
+    top: 28%;
 }
 
 .qoardinatot {
     position: absolute;
     width: 69%;
     left: -17%;
-    top: 23%;
+    top: 26%;
     cursor: grab;
     touch-action: none;
 }
@@ -471,7 +489,7 @@ body {
 .zoomWrapper {
     position: absolute;
     left: 91%;
-    top: 43%;
+    top: 49%;
     z-index: 10;
 }
 

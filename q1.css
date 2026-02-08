@@ -56,41 +56,45 @@ body {
 
 .qTitle {
     position: absolute;
-    right: 0%;
     top: 6%;
+    left: 75%;
+    transform: translateX(-50%);
 }
 
 .timerBlob {
     position: absolute;
     right: 70%;
-    top: 8%;
+    top: 10%;
+    height:7%;
 }
 
 #timerQ1 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #F5CC8E;
   margin-bottom: 20px;
   position: absolute;
-  right: 72.8%;
-  top: 8.5%;
+  right: 72.5%;
+  top: 10.5%;
 }
 
 .instructions{
     position: absolute;
-    top: 16%;
-    left: 0%
+    top: 17%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .q1 {
     position: absolute;
-    top: 21%;
-    left: 2%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .options {
     position: absolute;
     top: 32%;
-    left: 30%;
+    left: 60%;
+    transform: translateX(-50%);
 }
 
 .radioGroup {
@@ -130,25 +134,29 @@ body {
   border-color: #C4723F;
 }
 
+
 .nextQ {
     position: absolute;
-    top: 81%;
-    right: 30%;
-    width: 70%;
+    top: 83%;
+    left: 36%;
+    width: 60%;
+    transform: translateX(-50%);
+    cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .nextQ:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
 }
 
 .nextQ:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
 }
 
 .steps {
     position: absolute;
     top: 95%;
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
 }
