@@ -118,8 +118,6 @@ if (textDiv && startButton && overButton) {
   overButton.addEventListener("click", startTextRotation);
 }
 
-
-
 // =====  Question Timer Q1=====
 const timerElement = document.getElementById("timerQ1");
 
@@ -298,7 +296,7 @@ if (q3Radios.length > 0) {
   q3Radios.forEach(radio => {
     radio.addEventListener('change', () => {
       const selectedValue = radio.value;
-      const correctAnswer = "1"; // תשובה נכונה
+      const correctAnswer = "4"; // תשובה נכונה
 
       const isCorrect = selectedValue === correctAnswer;
 
@@ -904,7 +902,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const textBlob8 = document.querySelector(".textBlob8");
   const tazaImg = document.querySelector(".taza");
   const nextQ = document.querySelector(".nextQ");
-
+  let blob7Cube = null;
+  let blob8Cube = null;
   const correctAnswersBlob7 = ["cube1", "cube3", "cube5"];
   const correctAnswersBlob8 = ["cube2", "cube4", "cube6"];
 
@@ -914,12 +913,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSection = 1;
 
   // מיקום התחלתי של כל קוביה
-  const initialPositions = {};
-  cubes.forEach(cube => {
-    const rect = cube.getBoundingClientRect();
-    initialPositions[cube.className] = { left: rect.left, top: rect.top };
-    cube.style.position = "absolute";
-  });
+const initialPositions = {};
+
+cubes.forEach(cube => {
+  const rect = cube.getBoundingClientRect();
+  const cubeKey = cube.classList[0]; // cube1 / cube2 / ...
+
+  initialPositions[cubeKey] = {
+    left: rect.left,
+    top: rect.top
+  };
+
+  cube.style.position = "absolute";
+  cube.style.left = rect.left + "px";
+  cube.style.top = rect.top + "px";
+});
+
+
 
   function resetAllCubes() {
     cubes.forEach(cube => {
@@ -944,27 +954,51 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  function handleDrop(cube, blob) {
-    const cubeClass = cube.classList[0];
-    // מציג את הקוביה על ה-blob
-    blob.textContent = cube.textContent;
+function handleDrop(cube, blob) {
+  const cubeClass = cube.classList[0];
 
-    // מרכז את הקוביה ב-blob
-    const blobRect = blob.getBoundingClientRect();
-    const cubeRect = cube.getBoundingClientRect();
-    cube.style.left = blobRect.left + (blobRect.width - cubeRect.width)/2 + "px";
-    cube.style.top = blobRect.top + (blobRect.height - cubeRect.height)/2 + "px";
-    cube.style.cursor = "default";
-    cube.style.zIndex = 5000;
-
-    // שומר נכונה/לא נכונה ב-sessionStorage
-    let isCorrect = false;
-    if ((blob === textBlob7 && correctAnswersBlob7.includes(cubeClass)) ||
-        (blob === textBlob8 && correctAnswersBlob8.includes(cubeClass))) {
-      isCorrect = true;
-    }
-    sessionStorage.setItem(blob.className, JSON.stringify({ answer: cube.textContent, correct: isCorrect }));
+  // אם כבר יש קוביה על ה-blob → להחזיר אותה למקום
+  if (blob === textBlob7 && blob7Cube && blob7Cube !== cube) {
+    resetCubePosition(blob7Cube);
   }
+
+  if (blob === textBlob8 && blob8Cube && blob8Cube !== cube) {
+    resetCubePosition(blob8Cube);
+  }
+
+  // עדכון מי יושב על ה-blob
+  if (blob === textBlob7) blob7Cube = cube;
+  if (blob === textBlob8) blob8Cube = cube;
+
+  // הצגת טקסט
+  blob.textContent = cube.textContent;
+
+  // מרכז הקוביה על ה-blob
+  const blobRect = blob.getBoundingClientRect();
+  const cubeRect = cube.getBoundingClientRect();
+
+  cube.style.left =
+    blobRect.left + (blobRect.width - cubeRect.width) / 2 + "px";
+  cube.style.top =
+    blobRect.top + (blobRect.height - cubeRect.height) / 2 + "px";
+
+  cube.style.cursor = "default";
+  cube.style.zIndex = 5000;
+
+  // בדיקת נכונות
+  let isCorrect = false;
+  if (
+    (blob === textBlob7 && correctAnswersBlob7.includes(cubeClass)) ||
+    (blob === textBlob8 && correctAnswersBlob8.includes(cubeClass))
+  ) {
+    isCorrect = true;
+  }
+
+  sessionStorage.setItem(
+    blob.className,
+    JSON.stringify({ answer: cube.textContent, correct: isCorrect })
+  );
+}
 
   function resetCubePosition(cube) {
     const pos = initialPositions[cube.className];
