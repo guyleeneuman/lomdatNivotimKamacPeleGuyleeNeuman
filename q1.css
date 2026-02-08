@@ -86,6 +86,7 @@ body {
 
 .q1 {
     position: absolute;
+    top: 22%;
     left: 50%;
     transform: translateX(-50%);
 }
