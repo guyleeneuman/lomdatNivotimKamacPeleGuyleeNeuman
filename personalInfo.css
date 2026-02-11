@@ -69,6 +69,9 @@ body {
     transform: translateX(-50%);
     cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
 }
 
 .button:hover {

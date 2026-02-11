@@ -96,6 +96,9 @@ body {
     left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -118,6 +121,9 @@ body {
     left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -129,3 +135,16 @@ body {
 .over:active {
     transform: translateX(-50%) scale(0.95);
 }
+
+.nextInstruction {
+  position: absolute;
+  top: 30%;
+  left: 32%;
+  cursor: pointer;
+  transform: translateX(-50%);
+  display: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+

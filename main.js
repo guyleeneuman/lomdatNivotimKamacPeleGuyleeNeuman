@@ -26,12 +26,36 @@ function initGame() {
   window.location.href = "startPage.html";
 }
 
-// ======== אופציונלי: קריאה לפונקציה בלחיצה על כפתור "אתחול" ========
+// ======== קריאה לפונקציה בלחיצה על כפתור "אתחול" ========
 const resetBtn = document.getElementById("resetGameBtn");
 if (resetBtn) {
   resetBtn.addEventListener("click", initGame);
 }
 
+// ======== מניעת swipe אופקי באייפון ========
+document.addEventListener('DOMContentLoaded', () => {
+  let startX = 0;
+  let startY = 0;
+
+  document.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 1) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - startX;
+      const deltaY = touch.clientY - startY;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        e.preventDefault(); // חוסם את ה-swipe של הדפדפן
+      }
+    }
+  }, { passive: false });
+});
 
 
 // =====  Start Page (name + personal number + army details) =====
@@ -66,13 +90,14 @@ if (submitButton) {
   });
 }
 
-// ===== Instructions Text Rotation =====
+// ===== Instructions Text Logic =====
+
 const instructionsTexts = [
   "שלום לכולם אני דני ובדיוק כמוכם עברתי את מבחני הכניסה לקמכ.",
   "עכשיו תעברו סדרת שאלות בנושא ניווטים.",
   "לכל שאלה יהיה זמן מוקצב וניתן לראות את הזמן שנשאר בטיימר משמאל למעלה.",
   "שימו לב! איכות עדיפה על כמות. חשוב שיהיו תשובות נכונות גם אם לא מלאות.",
-  "במידה ותצאו מהאפליקציה, הזמן ימשיך לרדת ולא תוכלו לקבל אותו בחזרה." ,
+  "במידה ותצאו מהאפליקציה, הזמן ימשיך לרדת ולא תוכלו לקבל אותו בחזרה.",
   "אני מאמין בכם, זוהי תחילת דרככם בביסל\"ח על מנת שתהיו מפקדי כיתות א-ל-ו-פ-י-ם.",
   "בהצלחה ממני, דני."
 ];
@@ -80,43 +105,55 @@ const instructionsTexts = [
 const textDiv = document.querySelector(".text");
 const startButton = document.querySelector(".button");
 const overButton = document.querySelector(".over");
+const nextInstruction = document.querySelector(".nextInstruction");
 
-if (textDiv && startButton && overButton) {
+const AUTO_READ_TIME = 3000; // כמה זמן "חייבים" לקרוא לפני שמופיע הכפתור
+
+if (textDiv && startButton && overButton && nextInstruction) {
   let currentIndex = 0;
-  let textInterval = null;
+  let timeoutId = null;
 
-  const startTextRotation = () => {
-    // איפוס מצב
-    currentIndex = 0;
+  const showText = () => {
     textDiv.textContent = instructionsTexts[currentIndex];
 
+    // בזמן קריאה חובה – אין כפתורים
+    nextInstruction.style.display = "none";
     startButton.style.display = "none";
     overButton.style.display = "none";
 
-    // לעצור interval קודם אם קיים
-    if (textInterval) clearInterval(textInterval);
-
-    textInterval = setInterval(() => {
-      currentIndex++;
-
-      if (currentIndex < instructionsTexts.length) {
-        textDiv.textContent = instructionsTexts[currentIndex];
+    // אחרי מספר שניות – מופיע כפתור המשך (אם לא סוף)
+    timeoutId = setTimeout(() => {
+      if (currentIndex < instructionsTexts.length - 1) {
+        nextInstruction.style.display = "block";
       } else {
-        clearInterval(textInterval);
-        textInterval = null;
-
+        // סוף ההוראות – מציגים כפתורים סופיים
         startButton.style.display = "block";
         overButton.style.display = "block";
       }
-    }, 5000);
+    }, AUTO_READ_TIME);
   };
 
-  // הרצה ראשונית בטעינת הדף
-  startTextRotation();
+  const nextText = () => {
+    if (timeoutId) clearTimeout(timeoutId);
 
-  // לחיצה על "חזרה על הכל"
-  overButton.addEventListener("click", startTextRotation);
+    currentIndex++;
+    showText();
+  };
+
+  const restartAll = () => {
+    if (timeoutId) clearTimeout(timeoutId);
+    currentIndex = 0;
+    showText();
+  };
+
+  // אירועים
+  nextInstruction.addEventListener("click", nextText);
+  overButton.addEventListener("click", restartAll);
+
+  // הרצה ראשונית
+  showText();
 }
+
 
 // =====  Question Timer Q1=====
 const timerElement = document.getElementById("timerQ1");
@@ -188,8 +225,8 @@ function calcQ1Score() {
 const q2Answers = {
   answer1: ["360", "0"],   // שתי תשובות נכונות
   answer2: "מערב",
-  answer3: "דרום",
-  answer4: "180"
+  answer3: ["דרום", "180"],
+  answer4: ["דרום", "180"]
 };
 
 // בוחרים את השדות
@@ -215,14 +252,14 @@ if (answer1Input && answer2Input && answer3Input && answer4Input) {
         value: a2,
         isCorrect: a2 === q2Answers.answer2
       },
-      answer3: {
-        value: a3,
-        isCorrect: a3 === q2Answers.answer3
-      },
-      answer4: {
-        value: a4,
-        isCorrect: a4 === q2Answers.answer4
-      }
+    answer3: {
+      value: a3,
+      isCorrect: q2Answers.answer3.includes(a3)
+},
+    answer4: {
+      value: a4,
+      isCorrect: q2Answers.answer4.includes(a4)
+}
     };
 
     sessionStorage.setItem('q2Answers', JSON.stringify(answersData));
@@ -809,17 +846,25 @@ document.addEventListener("DOMContentLoaded", () => {
       let isCorrect = false;
       const check = section.answers[i];
 
-      if (check.special) {
-        for (const sp of check.special) {
-          if (value.startsWith(sp.first3)) {
-            const num = parseInt(value.slice(3),10);
-            if (!isNaN(num) && num >= sp.min && num <= sp.max) isCorrect = true;
-          }
-        }
-      } else {
-        const num = parseInt(value,10);
-        if (!isNaN(num) && num >= check.min && num <= check.max) isCorrect = true;
-      }
+if (check.special) {
+  // מנקה רווחים ו־/ מכל הערך שהמשתמש כתב
+  const cleaned = value.replace(/\s+/g, "").replace(/\//g, "");
+
+  // בודק שכל אחד מה-special מופיע במחרוזת, בלי תלות בסדר
+  isCorrect = check.special.every(sp => {
+    // מחפש את first3 ואחריו מספר של 1 עד 3 ספרות
+    const regex = new RegExp(sp.first3 + "(\\d{1,3})");
+    const match = cleaned.match(regex);
+    if (!match) return false; // לא נמצא
+
+    const num = parseInt(match[1], 10);
+    return !isNaN(num) && num >= sp.min && num <= sp.max;
+  });
+
+} else {
+  const num = parseInt(value, 10);
+  if (!isNaN(num) && num >= check.min && num <= check.max) isCorrect = true;
+}
 
       answersData[`answer${i+1}`] = { value, isCorrect };
     });

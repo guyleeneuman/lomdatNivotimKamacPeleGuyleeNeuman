@@ -62,7 +62,10 @@ body {
     top: 70%;
     left: 55%;
     transform: translateX(-50%);
-    cursor: pointer;
+    cursor: pointer;    
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 

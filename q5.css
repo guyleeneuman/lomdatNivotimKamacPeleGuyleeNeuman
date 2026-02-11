@@ -70,7 +70,8 @@ body {
 
 .timerBlob {
     position: absolute;
-    right: 70%;
+    left: 20%;
+    transform: translateX(-50%);
     top: 10%;
     height:7%;
 }
@@ -110,7 +111,7 @@ body {
     position: absolute;
     top: 66%;
     left: 10.4%;
-        left: 50%;              
+    left: 50%;              
     transform: translateX(-50%); 
 }
 
@@ -123,6 +124,9 @@ body {
     width: 50%;
     transition: transform 0.3s ease, filter 0.3s ease;
     z-index: 9999;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
 }
 
 .nextQ5:hover {
@@ -140,8 +144,9 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    top: 68%;
-    z-index: 30;
+    top: 64%;
+    z-index: 10;
+
 }
 
 .answerA { 
@@ -149,7 +154,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: right;
-    margin-top: 3px;
     left: 50%;
     transform: translateX(80px);
 }
@@ -170,7 +174,7 @@ body {
     bottom: 0%;  
     height: 10%;             
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-    z-index: 200;
+    z-index: 20000;
 }
 
 .answerAInput::placeholder {
@@ -198,7 +202,7 @@ body {
 }
 
 .answerBInput {
-    position: relative;
+     position: relative;
     margin-top: 10px;              
     padding: 5px 15px;            
     width: 30%;                      
@@ -209,11 +213,11 @@ body {
     border-radius: 30px;             
     font-size: 1.2rem;              
     text-align: center;            
-    outline: none;    
+    outline: none;   
     bottom: 0%;  
     height: 10%;             
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-    z-index: 200;
+    z-index: 20000;
 }
 
 .answerBInput::placeholder {
@@ -256,7 +260,7 @@ body {
     bottom: 0%;  
     height: 10%;             
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-    z-index: 200;
+    z-index: 20000;
 }
 
 .answerCInput::placeholder {
@@ -272,6 +276,37 @@ body {
         padding: 12px 15px;
     }
 }
+
+@media (max-width: 768px) {
+
+  .chart-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 13px;
+  }
+
+  .answerA,
+  .answerB,
+  .answerC {
+    position: relative;
+    left: 0;
+    transform: none;
+    margin: 0;
+  }
+
+  .answerAInput,
+  .answerBInput,
+  .answerCInput {
+    width: 24vw;       /* קטן ומאוזן */
+    max-width: 90px;
+    height: 44px;      /* טאץ׳ תקני */
+    font-size: 1rem;
+    padding: 3px 3px;
+  }
+}
+
+
 
 .cubeTag1 {
     position: absolute;
@@ -560,4 +595,12 @@ body {
     left: 64%;
     height: 5%;
     width: 26%;
+}
+
+.madQ {
+    position: absolute;
+    top: 57%;
+    width: 60%; 
+    left: 50%;
+    transform: translateX(-50%);
 }

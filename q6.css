@@ -75,6 +75,9 @@ body {
     width: 55%;
     transform: translateX(-50%);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -96,7 +99,8 @@ body {
 
 .timerBlob {
     position: absolute;
-    right: 70%;
+    left: 20%;
+    transform: translateX(-50%);
     top: 10%;
     height:7%;
 }

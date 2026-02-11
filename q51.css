@@ -70,7 +70,8 @@ body {
 
 .timerBlob {
     position: absolute;
-    right: 70%;
+    left: 20%;
+    transform: translateX(-50%);
     top: 10%;
     height:7%;
 }
@@ -107,6 +108,9 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
     z-index: 9999;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
 }
 
 .nextQ:hover {

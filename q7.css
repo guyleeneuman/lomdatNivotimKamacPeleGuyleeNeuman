@@ -71,7 +71,8 @@ body {
 
 .timerBlob {
     position: absolute;
-    right: 70%;
+    left: 20%;
+    transform: translateX(-50%);
     top: 10%;
     height:7%;
 }
@@ -101,6 +102,9 @@ body {
     width: 30%;
     transition: transform 0.3s ease, filter 0.3s ease;
     z-index: 9999;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
 }
 
 .nextQ7:hover {
@@ -119,15 +123,7 @@ body {
     transform: translateX(-50%);
 }
 
-.tazaQ7 {
-  position: absolute;
-  top: 26%;
-  right: 0%;
-  width: clamp(200px, 100%, 500px); /* רוחב משתנה לפי המסך */
-  height: auto;                     /* גובה נשמר לפי יחס התמונה */
-      left: 50%;
-    transform: translateX(-50%);
-}
+
 
 [class^="cubeT"] {
   position: absolute;
@@ -164,7 +160,27 @@ body {
  z-index: 10000000;
 }
 
-/* נקודות רספונסיביות */
+/* קונטיינר שמחזיק את התמונה והנקודות */
+/* קונטיינר שמרכז את התמונה ומגדיר גובה */
+.taza-container {
+  position: relative;
+  width: clamp(200px, 100%, 500px);
+  height: 60vh; /* גובה יחסי למסך */
+  margin: 0 auto;
+}
+
+/* התמונה עצמה */
+.tazaQ7 {
+  position: absolute;
+  top: 44%;           /* עכשיו באמת ינוע לפי המסך */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* נקודות יחסיות לתמונה */
 .circle-outline {
   position: absolute;
   width: clamp(12px, 1.5vw, 15px);
@@ -175,14 +191,14 @@ body {
   box-shadow: 0 0 12px rgba(255, 235, 205, 0.8);
 }
 
-/* מיקום נקודות יחסית למסך */
-#c1  { top: 33%; left: 38%; }
-#c2  { top: 33%; left: 65%; }
-#c3  { top: 57%; left: 45%; }
-#c4  { top: 46%; left: 58%; }
-#c5  { top: 28%; left: 18%; }
-#c6  { top: 41%; left: 11%; }
-#c7  { top: 40%; left: 55%; }
-#c8  { top: 52%; left: 75%; }
-#c9  { top: 58%; left: 29%; }
-#c10 { top: 29%; left: 67%; }
+/* מיקום נקודות יחסית לתמונה */
+#c1  { top: 55%; left: 38%; }
+#c2  { top: 55%; left: 64%; }
+#c3  { top: 92%; left: 45%; }
+#c4  { top: 73%; left: 58%; }
+#c5  { top: 47%; left: 19%; }
+#c6  { top: 66%; left: 11%; }
+#c7  { top: 64%; left: 55%; }
+#c8  { top: 81%; left: 75%; }
+#c9  { top: 90%; left: 29%; }
+#c10 { top: 49%; left: 67%; }

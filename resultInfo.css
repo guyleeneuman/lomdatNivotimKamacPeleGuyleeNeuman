@@ -65,16 +65,20 @@ body {
     position: absolute;
     top: 20%;
     left: 50%;
+    height: 65%;
     transform: translateX(-50%);
 }
 
 .nextQ {
     position: absolute;
-    top: 88%;
+    top: 81%;
     left: 53%;
     width: 60%;
     transform: translateX(-50%);
-    cursor: pointer;
+    cursor: pointer;     
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -89,50 +93,57 @@ body {
 
 .q1 {
     position: absolute;
-    top: 27%;
-    left: 40%;
+    top: 26%;
+    left: 45%;
+    transform: translateX(-50%);
     color: #014725;
 }
 
 .q2 {
     position: absolute;
-    top: 35%;
-    left: 40%;
+    top: 34%;
+    left: 45%;
+    transform: translateX(-50%);
     color: #014725;
 }
 
 .q3 {
     position: absolute;
-    top: 44%;
-    left: 40%;
+    top: 42%;
+    left: 45%;
+    transform: translateX(-50%);
     color: #014725;
 }
 
 .q4 {
     position: absolute;
-    top: 53%;
-    left: 40%;
+    top: 50%;
+    left: 45%;
+    transform: translateX(-50%);
     color: #014725;
 }
 
 .q5 {
     position: absolute;
-    top: 63%;
-    left: 40%;
+    top: 58%;
+    left: 45%;
+    transform: translateX(-50%);
     color: #014725;
 }
 
 .q6 {
     position: absolute;
-    top: 73%;
-    left: 40%;
+    top: 66%;
+    left: 45%;
+    transform: translateX(-50%);
     color: #014725;
 }
 
 .q7 {
     position: absolute;
-    top: 81%;
-    left: 40%;
+    top: 74%;
+    left: 45%;
+    transform: translateX(-50%);
     color: #014725;
 }
 
