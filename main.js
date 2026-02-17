@@ -232,7 +232,7 @@ if (submitButton) {
 // ===== Instructions Text Logic =====
 
 const instructionsTexts = [
-  "שלום לכולם אני דני ובדיוק כמוכם עברתי את מבחני הכניסה לקמכ.",
+  "שלום לכולם אני דני ובדיוק כמוכם עברתי את מבחני הכניסה לקמ''כ.",
   "עכשיו תעברו סדרת שאלות בנושא ניווטים.",
   "לכל שאלה יהיה זמן מוקצב וניתן לראות את הזמן שנשאר בטיימר משמאל למעלה.",
   "שימו לב! איכות עדיפה על כמות. חשוב שיהיו תשובות נכונות גם אם לא מלאות.",
@@ -557,7 +557,7 @@ if (timerElementQ4) {
 
 // פונקציה למעבר אוטומטי לעמוד הבא
 function goToNextQuestionQ4() {
-  window.location.href = "q5.html"; // העמוד הבא
+  window.location.href = "instructions5.html"; // העמוד הבא
 }
 // ===== Q4 Answer Saving =====
 const q4Radios = document.querySelectorAll('input[name="q4"]'); // אם ב-q4 גם name="q1"
