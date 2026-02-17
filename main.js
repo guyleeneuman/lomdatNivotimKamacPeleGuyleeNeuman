@@ -853,15 +853,20 @@ if (zoomBtn && zoomContainer) {
   });
 }
 
-// ===== Drag Qoardinatot Q5(mouse + touch) =====
+// ===== Drag & Rotate Qoardinatot Q5 (mouse + touch) =====
 const qoardinatot = document.getElementById("qoardinatot");
 
 let isDragging = false;
 let startX, startY, imgX = 0, imgY = 0;
 
+let currentRotation = 0;
+let initialAngle = 0;
+
 if (qoardinatot) {
   qoardinatot.style.position = "absolute";
+  qoardinatot.style.touchAction = "none"; // למנוע גלילה בעת גרירה
 
+  // --- גרירה ---
   const startDrag = (x, y) => {
     isDragging = true;
     startX = x - imgX;
@@ -880,30 +885,46 @@ if (qoardinatot) {
     isDragging = false;
   };
 
-  // עכבר
-  qoardinatot.addEventListener("mousedown", e => {
-    startDrag(e.clientX, e.clientY);
-  });
+  // --- סיבוב עבור שתי אצבעות ---
+  const rotateTouch = (touches) => {
+    const dx = touches[1].clientX - touches[0].clientX;
+    const dy = touches[1].clientY - touches[0].clientY;
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
-  document.addEventListener("mousemove", e => {
-    moveDrag(e.clientX, e.clientY);
-  });
+    if (!initialAngle && initialAngle !== 0) initialAngle = angle - currentRotation;
 
+    currentRotation = angle - initialAngle;
+    qoardinatot.style.transform = `rotate(${currentRotation}deg)`;
+  };
+
+  // --- Mouse events ---
+  qoardinatot.addEventListener("mousedown", e => startDrag(e.clientX, e.clientY));
+  document.addEventListener("mousemove", e => moveDrag(e.clientX, e.clientY));
   document.addEventListener("mouseup", stopDrag);
 
-  // מגע (מובייל)
+  // --- Touch events ---
   qoardinatot.addEventListener("touchstart", e => {
-    const touch = e.touches[0];
-    startDrag(touch.clientX, touch.clientY);
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      startDrag(touch.clientX, touch.clientY);
+    }
   });
 
   document.addEventListener("touchmove", e => {
-    const touch = e.touches[0];
-    moveDrag(touch.clientX, touch.clientY);
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      moveDrag(touch.clientX, touch.clientY);
+    } else if (e.touches.length === 2) {
+      rotateTouch(e.touches);
+    }
   });
 
-  document.addEventListener("touchend", stopDrag);
+  document.addEventListener("touchend", e => {
+    stopDrag();
+    if (e.touches.length < 2) initialAngle = 0;
+  });
 }
+
 // ===== Main Q5 & Q51 Logic =====
 
 // =======================
