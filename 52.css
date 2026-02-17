@@ -95,9 +95,9 @@ body {
 
 .chartTop {
     position: absolute;      
-    top: 60%;              
+    top: 59%;              
     left: 50%;    
-    width: 140%;          
+    width: 110%;          
     transform: translateX(-50%); 
 }
 
@@ -116,7 +116,7 @@ body {
     transform: translateX(-50%); 
 }
 
-.nextQ5 {
+.nextQ52 {
     position: absolute;
     top: 79%;
     left: 50%;
@@ -130,12 +130,12 @@ body {
     touch-action: manipulation;
 }
 
-.nextQ5:hover {
+.nextQ52:hover {
     transform: translateX(-50%) scale(1.1);
     filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
 }
 
-.nextQ5:active {
+.nextQ52:active {
     transform: translateX(-50%) scale(0.95);
 }
 
@@ -144,95 +144,10 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+    width: 120%;
     top: 64%;
     z-index: 10;
 
-}
-
-.answerA { 
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: right;
-    left: 50%;
-    transform: translateX(80px);
-}
-
-.answerAInput {
-    position: relative;
-    margin-top: 10px;              
-    padding: 5px 15px;            
-    width: 30%;                      
-    max-width: 600px;              
-    background-color: #FFEBCD;
-    color: rgba(51, 102, 51, 0.7);            
-    border: none;                    
-    border-radius: 30px;             
-    font-size: 1.2rem;              
-    text-align: center;            
-    outline: none;   
-    bottom: 0%;  
-    height: 10%;             
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-    z-index: 20000;
-}
-
-.answerAInput::placeholder {
-    color: #014725;
-    opacity: 0.7;
-}
-
-
-@media (max-width: 768px) {
-    .nameInput {
-        width: 14%;   
-        font-size: 1rem;
-        padding: 12px 15px;
-    }
-}
-
-.answerB { 
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: right;
-    margin-top: 3px;
-    left: 50%;
-    transform: translateX(-40px);
-}
-
-.answerBInput {
-     position: relative;
-    margin-top: 10px;              
-    padding: 5px 15px;            
-    width: 30%;                      
-    max-width: 600px;              
-    background-color: #FFEBCD;
-    color: rgba(51, 102, 51, 0.7);            
-    border: none;                    
-    border-radius: 30px;             
-    font-size: 1.2rem;              
-    text-align: center;            
-    outline: none;   
-    bottom: 0%;  
-    height: 10%;             
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-    z-index: 20000;
-}
-
-.answerBInput::placeholder {
-    color: #014725;
-    opacity: 0.7;
-}
-
-
-@media (max-width: 768px) {
-    .nameInput {
-        width: 14%;   
-        font-size: 1rem;
-        padding: 12px 15px;
-    }
 }
 
 .answerC { 
@@ -242,20 +157,20 @@ body {
     align-items: right;
     margin-top: 3px;
     left: 50%;
-    transform: translateX(-160px);
+    transform: translateX(-50px);
 }
 
 .answerCInput {
     position: relative;
     margin-top: 10px;              
     padding: 5px 15px;            
-    width: 30%;                      
-    max-width: 600px;              
+    width: 60%;                      
+    max-width: 1000px;              
     background-color: #FFEBCD;
     color: rgba(51, 102, 51, 0.7);            
     border: none;                    
-    border-radius: 30px;             
-    font-size: 1.2rem;              
+    border-radius: 0 0 30px 30px;
+    font-size: 1.3rem;              
     text-align: center;            
     outline: none;   
     bottom: 0%;  
@@ -272,7 +187,7 @@ body {
 
 @media (max-width: 768px) {
     .nameInput {
-        width: 14%;   
+        width: 24%;   
         font-size: 1rem;
         padding: 12px 15px;
     }
@@ -299,8 +214,8 @@ body {
   .answerAInput,
   .answerBInput,
   .answerCInput {
-    width: 24vw;       /* קטן ומאוזן */
-    max-width: 90px;
+    width: 52vw;       /* קטן ומאוזן */
+    /* max-width: 90px; */
     height: 44px;      /* טאץ׳ תקני */
     font-size: 1rem;
     padding: 3px 3px;
@@ -501,7 +416,7 @@ body {
 }
 
 /* התמונות נשארות כמו שהגדרת */
-.taza5 {
+.taza52 {
     position: absolute;
     width: 59%;
     left: 37%;

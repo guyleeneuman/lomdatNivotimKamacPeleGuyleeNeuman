@@ -57,6 +57,145 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: false });
 });
 
+// ===============================
+// ===== SCORE FUNCTIONS =========
+// ===============================
+
+// Q1
+function calcQ1Score() {
+  const maxScore = 5;
+  const isCorrect = sessionStorage.getItem("q1IsCorrect") === "true";
+  return { score: isCorrect ? maxScore : 0, maxScore };
+}
+
+// Q2
+function calcQ2Score() {
+  const maxScore = 10; // סך הניקוד של השאלה
+  const perSection = 2.5; // כל סעיף
+  let score = 0;
+
+  // נשלוף את הנתונים מה-sessionStorage
+  const stored = sessionStorage.getItem("q2Answers");
+  if (!stored) {
+    // אם לא ענו בכלל → 0 נקודות
+    return { score: 0, maxScore };
+  }
+
+  const answers = JSON.parse(stored);
+
+  // סכימת נקודות לפי סעיפים
+  if (answers.answer1 && answers.answer1.isCorrect) score += perSection;
+  if (answers.answer2 && answers.answer2.isCorrect) score += perSection;
+  if (answers.answer3 && answers.answer3.isCorrect) score += perSection;
+  if (answers.answer4 && answers.answer4.isCorrect) score += perSection;
+
+  return { score, maxScore };
+}
+
+
+// Q3
+function calcQ3Score() {
+  const maxScore = 5;
+  const isCorrect = sessionStorage.getItem("q3IsCorrect") === "true";
+  return { score: isCorrect ? maxScore : 0, maxScore };
+}
+
+// Q4
+function calcQ4Score() {
+  const maxScore = 5;
+  const isCorrect = sessionStorage.getItem("q4IsCorrect") === "true";
+  return { score: isCorrect ? maxScore : 0, maxScore };
+}
+
+// Q5 + Q51
+function calcQ5Score() {
+  const pointsPerCorrect = 2;
+  const totalSections = 4;
+
+  let score = 0;
+
+  // ===== Q5 חלק A+B =====
+  for (let i = 1; i <= totalSections; i++) {
+    const data = JSON.parse(sessionStorage.getItem(`q5AB_${i}`)) || {};
+
+    if (data.answerA?.isCorrect) score += pointsPerCorrect;
+    if (data.answerB?.isCorrect) score += pointsPerCorrect;
+  }
+
+  // ===== Q5 חלק C =====
+  for (let i = 1; i <= totalSections; i++) {
+    const data = JSON.parse(sessionStorage.getItem(`q5C_${i}`));
+    if (data?.isCorrect) score += pointsPerCorrect;
+  }
+
+  // ===== Q51 (drag cubes) =====
+  for (let i = 1; i <= totalSections; i++) {
+    const b7 = JSON.parse(sessionStorage.getItem(`textBlob7_${i}`));
+    const b8 = JSON.parse(sessionStorage.getItem(`textBlob8_${i}`));
+
+    if (b7?.correct) score += pointsPerCorrect;
+    if (b8?.correct) score += pointsPerCorrect;
+  }
+
+  const maxScore =
+    totalSections * 2 * pointsPerCorrect + // AB
+    totalSections * pointsPerCorrect +     // C
+    totalSections * 2 * pointsPerCorrect;  // Q51
+
+  return { score, maxScore };
+}
+
+
+// Q6
+function calcQ6Score() {
+  const results = JSON.parse(sessionStorage.getItem("q6Results")) || [];
+  let score = 0;
+
+  // כל ה-blobs הנכונים
+  const validBlobs = [
+    "textBlob1","textBlob2","textBlob3","textBlob4",
+    "textBlob5","textBlob6","textBlob7","textBlob8"
+  ];
+
+  results.forEach(item => {
+    const cubeNum = parseInt(item.cube.replace("cubeTag",""));
+    if (cubeNum === 5 || cubeNum === 6) return; // קוביות שלא נספרות
+    if (validBlobs.includes(item.attachedTo)) score += 1;
+  });
+
+  // maxScore = מספר כל הקוביות שמספורות (כולל אם יש יותר מ-5)
+  const maxScore = 5;
+
+  return { score, maxScore };
+}
+
+
+// Q7
+function calcQ7Score() {
+  const points = 3;
+  const steps = 10;
+  let score = 0;
+
+  for (let i = 1; i <= steps; i++) {
+    const data = JSON.parse(sessionStorage.getItem(`Q7_step_${i}`));
+    if (data?.correct) score += points;
+  }
+
+  return { score, maxScore: points * steps };
+}
+
+// כל השאלות ביחד
+function getAllScores() {
+  return [
+    calcQ1Score(),
+    calcQ2Score(),
+    calcQ3Score(),
+    calcQ4Score(),
+    calcQ5Score(),
+    calcQ6Score(),
+    calcQ7Score()
+  ];
+}
 
 // =====  Start Page (name + personal number + army details) =====
 const nameInput = document.querySelector('.nameInput');
@@ -203,22 +342,22 @@ if (q1Radios.length > 0) {
     });
   });
 }
-function calcQ1Score() {
-  const maxScore = 5;
-  let score = 0;
+// function calcQ1Score() {
+//   const maxScore = 5;
+//   let score = 0;
 
-  const isCorrect = sessionStorage.getItem("q1IsCorrect");
+//   const isCorrect = sessionStorage.getItem("q1IsCorrect");
 
-  // אם לא ענה או ענה לא נכון – 0 נקודות
-  if (isCorrect === "true") {
-    score = maxScore;
-  }
+//   // אם לא ענה או ענה לא נכון – 0 נקודות
+//   if (isCorrect === "true") {
+//     score = maxScore;
+//   }
 
-  return {
-    score,
-    maxScore
-  };
-}
+//   return {
+//     score,
+//     maxScore
+//   };
+// }
 
 
 // ===== Q2 Answer Saving =====
@@ -269,28 +408,28 @@ if (answer1Input && answer2Input && answer3Input && answer4Input) {
     input.addEventListener('blur', saveQ2Answers);
   });
 }
-function calcQ2Score() {
-  const maxScore = 10; // סך הניקוד של השאלה
-  const perSection = 2.5; // כל סעיף
-  let score = 0;
+// function calcQ2Score() {
+//   const maxScore = 10; // סך הניקוד של השאלה
+//   const perSection = 2.5; // כל סעיף
+//   let score = 0;
 
-  // נשלוף את הנתונים מה-sessionStorage
-  const stored = sessionStorage.getItem("q2Answers");
-  if (!stored) {
-    // אם לא ענו בכלל → 0 נקודות
-    return { score: 0, maxScore };
-  }
+//   // נשלוף את הנתונים מה-sessionStorage
+//   const stored = sessionStorage.getItem("q2Answers");
+//   if (!stored) {
+//     // אם לא ענו בכלל → 0 נקודות
+//     return { score: 0, maxScore };
+//   }
 
-  const answers = JSON.parse(stored);
+//   const answers = JSON.parse(stored);
 
-  // סכימת נקודות לפי סעיפים
-  if (answers.answer1 && answers.answer1.isCorrect) score += perSection;
-  if (answers.answer2 && answers.answer2.isCorrect) score += perSection;
-  if (answers.answer3 && answers.answer3.isCorrect) score += perSection;
-  if (answers.answer4 && answers.answer4.isCorrect) score += perSection;
+//   // סכימת נקודות לפי סעיפים
+//   if (answers.answer1 && answers.answer1.isCorrect) score += perSection;
+//   if (answers.answer2 && answers.answer2.isCorrect) score += perSection;
+//   if (answers.answer3 && answers.answer3.isCorrect) score += perSection;
+//   if (answers.answer4 && answers.answer4.isCorrect) score += perSection;
 
-  return { score, maxScore };
-}
+//   return { score, maxScore };
+// }
 
 // =====  Question Timer Q2 =====
 const timerElementQ2 = document.getElementById("timerQ2");
@@ -327,7 +466,7 @@ function goToNextQuestionQ2() {
   window.location.href = "q3.html"; // העמוד הבא
 }
 // ===== Q3 Answer Saving =====
-const q3Radios = document.querySelectorAll('input[name="q1"]'); // אם ב-q3 גם זה name="q1"
+const q3Radios = document.querySelectorAll('input[name="q3"]'); // אם ב-q3 גם זה name="q1"
 
 if (q3Radios.length > 0) {
   q3Radios.forEach(radio => {
@@ -346,20 +485,20 @@ if (q3Radios.length > 0) {
     });
   });
 }
-function calcQ3Score() {
-  const maxScore = 5; // סך הנקודות של שאלה 3
-  let score = 0;
+// function calcQ3Score() {
+//   const maxScore = 5; // סך הנקודות של שאלה 3
+//   let score = 0;
 
-  const storedIsCorrect = sessionStorage.getItem("q3IsCorrect");
+//   const storedIsCorrect = sessionStorage.getItem("q3IsCorrect");
 
-  if (storedIsCorrect === "true") {
-    score = maxScore;
-  } else {
-    score = 0; // אם לא ענו או לא נכון
-  }
+//   if (storedIsCorrect === "true") {
+//     score = maxScore;
+//   } else {
+//     score = 0; // אם לא ענו או לא נכון
+//   }
 
-  return { score, maxScore };
-}
+//   return { score, maxScore };
+// }
 
 
 // =====  Question Timer Q3 =====
@@ -421,7 +560,7 @@ function goToNextQuestionQ4() {
   window.location.href = "q5.html"; // העמוד הבא
 }
 // ===== Q4 Answer Saving =====
-const q4Radios = document.querySelectorAll('input[name="q1"]'); // אם ב-q4 גם name="q1"
+const q4Radios = document.querySelectorAll('input[name="q4"]'); // אם ב-q4 גם name="q1"
 
 if (q4Radios.length > 0) {
   q4Radios.forEach(radio => {
@@ -440,20 +579,20 @@ if (q4Radios.length > 0) {
     });
   });
 }
-function calcQ4Score() {
-  const maxScore = 5; // סך הנקודות של שאלה 4
-  let score = 0;
+// function calcQ4Score() {
+//   const maxScore = 5; // סך הנקודות של שאלה 4
+//   let score = 0;
 
-  const storedIsCorrect = sessionStorage.getItem("q4IsCorrect");
+//   const storedIsCorrect = sessionStorage.getItem("q4IsCorrect");
 
-  if (storedIsCorrect === "true") {
-    score = maxScore;
-  } else {
-    score = 0; // אם לא ענו או ענו לא נכון
-  }
+//   if (storedIsCorrect === "true") {
+//     score = maxScore;
+//   } else {
+//     score = 0; // אם לא ענו או ענו לא נכון
+//   }
 
-  return { score, maxScore };
-}
+//   return { score, maxScore };
+// }
 
 
 // =====  Question Timer Q5 =====
@@ -681,7 +820,11 @@ function saveQ6State() {
   cubeTags.forEach(cube => {
     if (cube.dataset.attachedTo) {
       const cubeNum = parseInt(cube.className.replace("cubeTag", ""));
-      const validBlobs = ["textBlob1", "textBlob2", "textBlob3", "textBlob4", "textBlob5"];
+      const validBlobs = [
+  "textBlob1", "textBlob2", "textBlob3", "textBlob4",
+  "textBlob5", "textBlob6", "textBlob7", "textBlob8"
+];
+
 
       result.push({
         cube: cube.className,
@@ -695,28 +838,6 @@ function saveQ6State() {
   console.log("Q6 saved:", result);
 }
 
-// ===== חישוב ניקוד Q6 =====
-function calcQ6Score() {
-  const maxScore = 5; // סך הנקודות של Q6
-  let score = 0;
-
-  const results = JSON.parse(sessionStorage.getItem("q6Results")) || [];
-
-  results.forEach(item => {
-    const cubeNum = parseInt(item.cube.replace("cubeTag", ""));
-
-    // קוביות 5 ו-6 לא נספרות
-    if (cubeNum === 5 || cubeNum === 6) return;
-
-    // אם הקובייה נמצאת על אחד ה־blobs הנכונים – נותנים נקודה
-    const validBlobs = ["textBlob1", "textBlob2", "textBlob3", "textBlob4", "textBlob5"];
-    if (validBlobs.includes(item.attachedTo)) {
-      score += 1;
-    }
-  });
-
-  return { score, maxScore };
-}
 
 // ===== Zoom In / Out =====
 // ===== Zoom In / Out Q5 =====
@@ -784,159 +905,184 @@ if (qoardinatot) {
   document.addEventListener("touchend", stopDrag);
 }
 // ===== Main Q5 & Q51 Logic =====
+
+// =======================
+// ======== Q5 AB ========
+// =======================
+
 document.addEventListener("DOMContentLoaded", () => {
 
- // =======================
-  // ======== Q5 ==========
-  // =======================
-  const q5TazaImg = document.querySelector(".taza");
-  const q5AnswerInputs = [
-    document.querySelector(".answerAInput"),
-    document.querySelector(".answerBInput"),
-    document.querySelector(".answerCInput")
-  ];
-  const q5NextBtn = document.querySelector(".nextQ5");
-  const timerElementQ5 = document.getElementById("timerQ5");
+  const q5TazaImg  = document.querySelector(".taza5");
+  const q5AnswerA  = document.querySelector("input.answerAInput");
+  const q5AnswerB  = document.querySelector("input.answerBInput");
+  const q5NextBtn  = document.querySelector(".nextQ5");
 
-  // ===== סעיפים Q5 =====
+  if (!q5NextBtn) return;
+
   const q5Sections = [
-    {
-      taza: "assets/elements/taza1.png",
-      answers: [
-        { min: 230, max: 240 },
-        { min: 340, max: 390 },
-        { special: [ { first3: "694", min:48, max:68 }, { first3:"442", min:61, max:81 } ] }
-      ]
-    },
-    {
-      taza: "assets/elements/taza2.png",
-      answers: [
-        { min: 100, max: 110 },
-        { min: 700, max: 750 },
-        { special: [ { first3: "694", min:28, max:48 }, { first3:"441", min:52, max:72 } ] }
-      ]
-    },
-    {
-      taza: "assets/elements/taza3.png",
-      answers: [
-        { min: 80, max: 90 },
-        { min: 2100, max: 2300 },
-        { special: [ { first3: "695", min:29, max:49 }, { first3:"442", min:2, max:22 } ] }
-      ]
-    },
-    {
-      taza: "assets/elements/taza4.png",
-      answers: [
-        { min: 280, max: 290 },
-        { min: 550, max: 600 },
-        { special: [ { first3: "692", min:45, max:65 }, { first3:"441", min:2, max:22 } ] }
-      ]
-    }
+    { taza:"assets/elements/taza1.png", answerB:{min:230,max:240}, answerA:{min:340,max:390} },
+    { taza:"assets/elements/taza2.png", answerB:{min:100,max:110}, answerA:{min:700,max:750} },
+    { taza:"assets/elements/taza3.png", answerB:{min:80,max:90},   answerA:{min:2100,max:2300} },
+    { taza:"assets/elements/taza4.png", answerB:{min:280,max:290}, answerA:{min:550,max:600} }
   ];
 
-  let q5CurrentSection = 0;
+  let current = 0;
 
-  // ===== שמירת תשובות =====
-  function saveQ5Answers() {
-    const answersData = {};
-    const section = q5Sections[q5CurrentSection];
+  function checkMinMax(range, value) {
+    const num = parseInt(value.replace(/[^\d]/g,""),10);
+    return Number.isFinite(num) && num>=range.min && num<=range.max;
+  }
 
-    q5AnswerInputs.forEach((input, i) => {
-      const value = input.value.trim();
-      let isCorrect = false;
-      const check = section.answers[i];
+  function save() {
+    const s = q5Sections[current];
 
-if (check.special) {
-  // מנקה רווחים ו־/ מכל הערך שהמשתמש כתב
-  const cleaned = value.replace(/\s+/g, "").replace(/\//g, "");
+    const data = {
+      answerA:{
+        value:q5AnswerA?.value||"",
+        isCorrect:checkMinMax(s.answerA,q5AnswerA?.value||"")
+      },
+      answerB:{
+        value:q5AnswerB?.value||"",
+        isCorrect:checkMinMax(s.answerB,q5AnswerB?.value||"")
+      }
+    };
 
-  // בודק שכל אחד מה-special מופיע במחרוזת, בלי תלות בסדר
-  isCorrect = check.special.every(sp => {
-    // מחפש את first3 ואחריו מספר של 1 עד 3 ספרות
-    const regex = new RegExp(sp.first3 + "(\\d{1,3})");
-    const match = cleaned.match(regex);
-    if (!match) return false; // לא נמצא
+    sessionStorage.setItem(`q5AB_${current+1}`,JSON.stringify(data));
+  }
 
-    const num = parseInt(match[1], 10);
-    return !isNaN(num) && num >= sp.min && num <= sp.max;
+  function load(i) {
+    const s = q5Sections[i];
+    if (q5TazaImg) q5TazaImg.src = s.taza;
+
+    const stored = JSON.parse(sessionStorage.getItem(`q5AB_${i+1}`)||"{}");
+
+    if (q5AnswerA) q5AnswerA.value = stored.answerA?.value||"";
+    if (q5AnswerB) q5AnswerB.value = stored.answerB?.value||"";
+  }
+
+  [q5AnswerA,q5AnswerB].filter(Boolean).forEach(el=>{
+    el.addEventListener("input",save);
   });
 
-} else {
-  const num = parseInt(value, 10);
-  if (!isNaN(num) && num >= check.min && num <= check.max) isCorrect = true;
-}
+  q5NextBtn.addEventListener("click",()=>{
+    save();
+    current++;
 
-      answersData[`answer${i+1}`] = { value, isCorrect };
-    });
-
-    sessionStorage.setItem(`q5AnswersSection${q5CurrentSection+1}`, JSON.stringify(answersData));
-  }
-
-  q5AnswerInputs.forEach(input => input.addEventListener("input", saveQ5Answers));
-
-  // ===== טעינת סעיף =====
-  function loadQ5Section(index) {
-    const section = q5Sections[index];
-    if (q5TazaImg) q5TazaImg.src = section.taza;
-    q5AnswerInputs.forEach(input => input.value = "");
-  }
-
-  loadQ5Section(q5CurrentSection);
-
-  // ===== כפתור הבא =====
-  if (q5NextBtn) {
-    q5NextBtn.addEventListener("click", () => {
-      saveQ5Answers();
-      q5CurrentSection++;
-      if (q5CurrentSection < q5Sections.length) {
-        loadQ5Section(q5CurrentSection);
-      } else {
-        window.location.href = "q51.html"; // מעבר ל-Q51
-      }
-    
-    });
-  }
-
-  // ===== טיימר Q5 =====
-  if (timerElementQ5) {
-    let timeLeft = 300; // 5 דקות
-    const timerInterval = setInterval(() => {
-      let m = Math.floor(timeLeft/60).toString().padStart(2,"0");
-      let s = (timeLeft%60).toString().padStart(2,"0");
-      timerElementQ5.textContent = `${m}:${s}`;
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        window.location.href = "q51.html";
-      }
-      timeLeft--;
-    },1000);
-  }
-})
-// ===== חישוב ניקוד Q5 =====
-function calcQ5Score() {
-  const pointsPerAnswer = 2;
-  const totalSections = 4; // 4 סעיפים
-  const answersPerSection = 3; // 3 תשובות בכל סעיף
-  const maxScore = totalSections * answersPerSection * pointsPerAnswer;
-
-  let score = 0;
-
-  for (let sectionIndex = 0; sectionIndex < totalSections; sectionIndex++) {
-    const sectionData = JSON.parse(sessionStorage.getItem(`q5AnswersSection${sectionIndex + 1}`)) || {};
-    for (let i = 1; i <= answersPerSection; i++) {
-      const ans = sectionData[`answer${i}`];
-      if (ans && ans.isCorrect) {
-        score += pointsPerAnswer;
-      }
+    if(current<q5Sections.length){
+      load(current);
+    } else {
+      window.location.href="52.html"; // ← מעבר ל-52
     }
+  });
+
+  load(current);
+});
+
+// =======================
+// ======== Q52 C ========
+// =======================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const input = document.querySelector(".answerCInput");
+  const nextBtn = document.querySelector(".nextQ52");
+  const tazaImg = document.querySelector(".taza52");
+
+  if (!input || !nextBtn) return;
+
+  const sections = [
+    { taza:"assets/elements/taza1.png", special:[{first3:"694",min:48,max:68},{first3:"442",min:61,max:81}] },
+    { taza:"assets/elements/taza2.png", special:[{first3:"694",min:28,max:48},{first3:"441",min:52,max:72}] },
+    { taza:"assets/elements/taza3.png", special:[{first3:"695",min:29,max:49},{first3:"442",min:2,max:22}] },
+    { taza:"assets/elements/taza4.png", special:[{first3:"692",min:45,max:65},{first3:"441",min:2,max:22}] }
+  ];
+
+  let current = 0;
+
+  function checkSpecial(arr,value){
+    const cleaned=value.replace(/[^\d]/g,"");
+
+    return arr.some(sp=>{
+      const r=new RegExp(sp.first3+"(\\d{1,3})");
+      const m=cleaned.match(r);
+      if(!m) return false;
+
+      const n=parseInt(m[1],10);
+      return n>=sp.min && n<=sp.max;
+    });
   }
 
-  return { score, maxScore };
-}
-// פונקציה למעבר אוטומטי לעמוד הבא
-function goToNextQuestionQ51() {
-  window.location.href = "q6.html"; // העמוד הבא
-} 
+  function save(){
+    const s=sections[current];
+
+    sessionStorage.setItem(
+      `q5C_${current+1}`,
+      JSON.stringify({
+        value:input.value,
+        isCorrect:checkSpecial(s.special,input.value)
+      })
+    );
+  }
+
+  function load(i){
+    const s=sections[i];
+    if(tazaImg) tazaImg.src=s.taza;
+
+    const stored=JSON.parse(sessionStorage.getItem(`q5C_${i+1}`)||"{}");
+    input.value=stored.value||"";
+  }
+
+input.addEventListener("input", save);
+
+const goNext = () => {
+  save();
+  current++;
+
+  if (current < sections.length) {
+    load(current);
+  } else {
+    window.location.href = "q51.html";
+  }
+};
+
+nextBtn.addEventListener("click", goNext);
+
+nextBtn.addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    goNext();
+  }
+});
+
+load(current);
+
+  });
+// =======================
+// ===== חישוב ניקוד Q5 =====
+// =======================
+
+// function calcQ5Score() {
+//   let score = 0;
+//   const maxScore = 24; // 16 נקודות ל-AB + 8 נקודות ל-C
+
+//   // חלק 1 – A ו-B (16 נקודות בסך הכל, 4 סעיפים * 2 נקודות לכל תשובה)
+//   for (let i = 1; i <= 4; i++) {
+//     const sectionData = JSON.parse(sessionStorage.getItem(`q5AB_${i}`)) || {};
+//     Object.values(sectionData).forEach(ans => {
+//       if (ans.isCorrect) score += 2; // כל תשובה נכונה = 2 נקודות
+//     });
+//   }
+
+//   // חלק 2 – C (8 נקודות בסך הכל, 4 סעיפים * 2 נקודות לכל סעיף)
+//   for (let i = 1; i <= 4; i++) {
+//     const cData = JSON.parse(sessionStorage.getItem(`q5C_${i}`)) || {};
+//     if (cData.isCorrect) score += 2;
+//   }
+
+//   return { score, maxScore };
+// }
+
+
 // =======================
 // ======== Q51 =========
 // =======================
@@ -949,8 +1095,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextQ = document.querySelector(".nextQ");
   let blob7Cube = null;
   let blob8Cube = null;
-  const correctAnswersBlob7 = ["cube1", "cube3", "cube5"];
-  const correctAnswersBlob8 = ["cube2", "cube4", "cube6"];
+  const correctAnswersBlob7 = ["cube1", "cube3", "cube5","cube8"];
+  const correctAnswersBlob8 = ["cube2", "cube4", "cube6","cube2" ];
 
   let draggedCube = null;
   let offsetX = 0;
@@ -1039,10 +1185,11 @@ function handleDrop(cube, blob) {
     isCorrect = true;
   }
 
-  sessionStorage.setItem(
-    blob.className,
-    JSON.stringify({ answer: cube.textContent, correct: isCorrect })
-  );
+sessionStorage.setItem(
+  `${blob.classList[0]}_${currentSection}`,
+  JSON.stringify({ answer: cube.textContent, correct: isCorrect })
+);
+
 }
 
   function resetCubePosition(cube) {
@@ -1122,7 +1269,7 @@ function handleDrop(cube, blob) {
   function loadAnswers() {
     const blobs = [textBlob7, textBlob8];
     blobs.forEach(blob => {
-      const data = sessionStorage.getItem(blob.className);
+      const data =sessionStorage.getItem(`${blob.classList[0]}_${currentSection}`);
       if (data) {
         const parsed = JSON.parse(data);
         blob.textContent = parsed.answer;
@@ -1148,7 +1295,8 @@ if (timerElementQ51) {
 
     if (timeLeftQ51 === 0) {
       clearInterval(timerIntervalQ51);
-      goToNextQuestionQ51();
+      nextQ.click();
+
     }
 
     timeLeftQ51--;
@@ -1159,24 +1307,44 @@ if (timerElementQ51) {
   loadAnswers();
   changeTaza(currentSection);
 });
-// ===== חישוב ניקוד Q51 =====
-function calcQ51Score() {
-  const pointsPerCorrectDrag = 2;
-  const totalSections = 4; // 4 סעיפים
-  const maxScore = totalSections * pointsPerCorrectDrag * 2; // 2 גרירות נכונות לכל סעיף
+// // ===== חישוב ניקוד Q51 =====
+// function calcQ5Score() {
+//   const pointsPerCorrect = 2;
+//   const totalSections = 4;
 
-  let score = 0;
+//   let score = 0;
 
-  // גרירות על textBlob7
-  const blob7Data = JSON.parse(sessionStorage.getItem("textBlob7")) || {};
-  if (blob7Data.correct) score += pointsPerCorrectDrag;
+//   // ===== חלק 1 – A+B =====
+//   // q5AB_1 … q5AB_4
+//   for (let section = 1; section <= totalSections; section++) {
+//     const sectionData = JSON.parse(
+//       sessionStorage.getItem(`q5AB_${section}`)
+//     ) || {};
 
-  // גרירות על textBlob8
-  const blob8Data = JSON.parse(sessionStorage.getItem("textBlob8")) || {};
-  if (blob8Data.correct) score += pointsPerCorrectDrag;
+//     Object.values(sectionData).forEach(ans => {
+//       if (ans?.isCorrect) score += pointsPerCorrect;
+//     });
+//   }
 
-  return { score, maxScore };
-}
+//   // ===== חלק 2 – C =====
+//   // q5C_1 … q5C_4
+//   for (let section = 1; section <= totalSections; section++) {
+//     const cData = JSON.parse(
+//       sessionStorage.getItem(`q5C_${section}`)
+//     );
+
+//     if (cData?.isCorrect) score += pointsPerCorrect;
+//   }
+
+//   const maxScore =
+//     totalSections * pointsPerCorrect * 2 + // A+B
+//     totalSections * pointsPerCorrect;     // C
+
+//   return { score, maxScore };
+// }
+
+
+
 // =======================
 // ======== Q7 =========
 // =======================
@@ -1331,19 +1499,25 @@ function calcQ51Score() {
     lastDroppedCubeId = null;
   }
 
-  function saveStepResult() {
-    const circleId = `c${currentStep}`;
-    const isCorrect = lastDroppedCubeId === correctAnswers[circleId];
+function saveStepResult() {
+  const circleId = `c${currentStep}`;
 
-    sessionStorage.setItem(
-      `Q7_step_${currentStep}`,
-      JSON.stringify({
-        circle: circleId,
-        chosen: lastDroppedCubeId,
-        correct: isCorrect
-      })
-    );
-  }
+  const chosen = lastDroppedCubeId || null;
+  const isCorrect = chosen === correctAnswers[circleId];
+
+  sessionStorage.setItem(
+    `Q7_step_${currentStep}`,
+    JSON.stringify({
+      circle: circleId,
+      chosen,
+      correct: isCorrect
+    })
+  );
+
+  // חשוב!!!
+  lastDroppedCubeId = null;
+}
+
 
   // ---------- NEXT BUTTON SAFE ----------
   const cleanNextBtn = nextBtn.cloneNode(true);
@@ -1370,22 +1544,93 @@ function calcQ51Score() {
   highlightCurrentCircle();
 })();
 
-// ===== חישוב ניקוד Q7 =====
-function calcQ7Score() {
-  const pointsPerCorrectDrag = 3;
-  const totalSteps = 10;
-  let score = 0;
+// // ===== חישוב ניקוד Q7 =====
+// function calcQ7Score() {
+//   const pointsPerCorrectDrag = 3;
+//   const totalSteps = 10;
+//   let score = 0;
 
-  for (let step = 1; step <= totalSteps; step++) {
-    const stepData = JSON.parse(sessionStorage.getItem(`Q7_step_${step}`));
-    if (stepData && stepData.correct) {
-      score += pointsPerCorrectDrag;
-    }
-  }
+//   for (let step = 1; step <= totalSteps; step++) {
+//     const stepData = JSON.parse(sessionStorage.getItem(`Q7_step_${step}`));
+//     if (stepData && stepData.correct) {
+//       score += pointsPerCorrectDrag;
+//     }
+//   }
 
-  const maxScore = pointsPerCorrectDrag * totalSteps;
-  return { score, maxScore };
+//   const maxScore = pointsPerCorrectDrag * totalSteps;
+//   return { score, maxScore };
+// }
+
+// //5 score
+// function calcQ5Score() {
+//   const pointsPerCorrect = 2;
+//   const totalSections = 4;
+
+//   let score = 0;
+
+//   // ===== Q5 חלק A+B =====
+//   for (let i = 1; i <= totalSections; i++) {
+//     const data = JSON.parse(sessionStorage.getItem(`q5AB_${i}`)) || {};
+
+//     if (data.answerA?.isCorrect) score += pointsPerCorrect;
+//     if (data.answerB?.isCorrect) score += pointsPerCorrect;
+//   }
+
+//   // ===== Q5 חלק C =====
+//   for (let i = 1; i <= totalSections; i++) {
+//     const data = JSON.parse(sessionStorage.getItem(`q5C_${i}`));
+//     if (data?.isCorrect) score += pointsPerCorrect;
+//   }
+
+//   // ===== Q51 (drag cubes) =====
+//   for (let i = 1; i <= totalSections; i++) {
+//     const b7 = JSON.parse(sessionStorage.getItem(`textBlob7_${i}`));
+//     const b8 = JSON.parse(sessionStorage.getItem(`textBlob8_${i}`));
+
+//     if (b7?.correct) score += pointsPerCorrect;
+//     if (b8?.correct) score += pointsPerCorrect;
+//   }
+
+//   const maxScore =
+//     totalSections * 2 * pointsPerCorrect + // AB
+//     totalSections * pointsPerCorrect +     // C
+//     totalSections * 2 * pointsPerCorrect;  // Q51
+
+//   return { score, maxScore };
+// }
+
+// ===== Results Page – Show Scores =====
+// ===============================
+// ===== RESULT PAGE =============
+// ===============================
+
+const scoreDiv = document.querySelector(".scoreInfo");
+
+if (scoreDiv) {
+  const scores = getAllScores();
+
+  const totalScore = scores.reduce((a, b) => a + b.score, 0);
+  const totalMax = scores.reduce((a, b) => a + b.maxScore, 0);
+
+  scoreDiv.textContent = `${totalScore} / ${totalMax}`;
 }
+
+// ===== Results Page – Show Scores Per Question (resultInfo.html) =====
+
+// ===============================
+// ===== RESULT INFO PAGE ========
+// ===============================
+
+const scores = getAllScores();
+
+scores.forEach((q, i) => {
+  const div = document.querySelector(`.q${i + 1}`);
+  if (div) {
+    div.textContent = `${q.score} / ${q.maxScore}`;
+  }
+});
+
+
 
 // ===== Results Page – Show Personal Info =====
 const personalInfoDiv = document.querySelector('.personalInfo');
@@ -1409,187 +1654,3 @@ if (personalInfoDiv) {
     personalInfoDiv.textContent = "פרטים אישיים לא זמינים";
   }
 }
-// ===== Results Page – Show Scores =====
-const scoreDiv = document.querySelector('.scoreInfo');
-
-if (scoreDiv) {
-  // ===== פונקציות חישוב – אם לא קיימות כבר ניתן להוסיף כאן או לייבא מהJS הקודם =====
-  function calcQ1Score() {
-    const selected = sessionStorage.getItem('q1Answer');
-    const isCorrect = sessionStorage.getItem('q1IsCorrect') === "true";
-    return { score: isCorrect ? 5 : 0, maxScore: 5 };
-  }
-
-  function calcQ2Score() {
-    const data = JSON.parse(sessionStorage.getItem('q2Answers')) || {};
-    let score = 0;
-    const pointsPerAnswer = 2.5;
-    Object.keys(data).forEach(key => {
-      if (data[key].isCorrect) score += pointsPerAnswer;
-    });
-    return { score, maxScore: 10 };
-  }
-
-  function calcQ3Score() {
-    const isCorrect = sessionStorage.getItem('q3IsCorrect') === "true";
-    return { score: isCorrect ? 5 : 0, maxScore: 5 };
-  }
-
-  function calcQ4Score() {
-    const isCorrect = sessionStorage.getItem('q4IsCorrect') === "true";
-    return { score: isCorrect ? 5 : 0, maxScore: 5 };
-  }
-
-  function calcQ5Score() {
-    let score = 0;
-    let maxScore = 32 + 8; // חלק 1 + חלק 2
-    // ===== חלק 1 =====
-    for (let i = 1; i <= 4; i++) {
-      const sectionData = JSON.parse(sessionStorage.getItem(`q5AnswersSection${i}`)) || {};
-      Object.values(sectionData).forEach(ans => {
-        if (ans.isCorrect) score += 2;
-      });
-    }
-    // ===== חלק 2 =====
-    const blobs = ['textBlob7','textBlob8'];
-    blobs.forEach(blob => {
-      const data = JSON.parse(sessionStorage.getItem(blob));
-      if (data && data.correct) score += 2;
-    });
-    return { score, maxScore };
-  }
-
-  function calcQ6Score() {
-    const results = JSON.parse(sessionStorage.getItem("q6Results")) || [];
-    let score = 0;
-    const validBlobs = ["textBlob1","textBlob2","textBlob3","textBlob4","textBlob5"];
-    results.forEach(item => {
-      const cubeNum = parseInt(item.cube.replace("cubeTag",""));
-      if (cubeNum === 5 || cubeNum === 6) return;
-      if (validBlobs.includes(item.attachedTo)) score += 1;
-    });
-    return { score, maxScore: 5 };
-  }
-
-  function calcQ7Score() {
-    let score = 0;
-    const pointsPerCorrect = 3;
-    for (let i = 1; i <= 10; i++) {
-      const stepData = JSON.parse(sessionStorage.getItem(`Q7_step_${i}`));
-      if (stepData && stepData.correct) score += pointsPerCorrect;
-    }
-    return { score, maxScore: 30 };
-  }
-
-  // ===== חיבור כל השאלות =====
-  const allScores = [
-    calcQ1Score(),
-    calcQ2Score(),
-    calcQ3Score(),
-    calcQ4Score(),
-    calcQ5Score(),
-    calcQ6Score(),
-    calcQ7Score()
-  ];
-
-  const totalScore = allScores.reduce((acc, val) => acc + val.score, 0);
-  const totalMaxScore = allScores.reduce((acc, val) => acc + val.maxScore, 0);
-
-
-  // ===== הצגה – רק מספר כולל =====
-  scoreDiv.textContent = totalScore;
-}
-// ===== Results Page – Show Scores Per Question (resultInfo.html) =====
-
-// ===== פונקציות חישוב נקודות לכל שאלה =====
-function calcQ1Score() {
-  const isCorrect = sessionStorage.getItem('q1IsCorrect') === "true";
-  return { score: isCorrect ? 5 : 0, maxScore: 5 };
-}
-
-function calcQ2Score() {
-  const data = JSON.parse(sessionStorage.getItem('q2Answers')) || {};
-  let score = 0;
-  const pointsPerAnswer = 2.5;
-  Object.values(data).forEach(ans => {
-    if (ans.isCorrect) score += pointsPerAnswer;
-  });
-  return { score, maxScore: 10 };
-}
-
-function calcQ3Score() {
-  const isCorrect = sessionStorage.getItem('q3IsCorrect') === "true";
-  return { score: isCorrect ? 5 : 0, maxScore: 5 };
-}
-
-function calcQ4Score() {
-  const isCorrect = sessionStorage.getItem('q4IsCorrect') === "true";
-  return { score: isCorrect ? 5 : 0, maxScore: 5 };
-}
-
-function calcQ5Score() {
-  let score = 0;
-  const maxScore = 40; // 32 חלק 1 + 8 חלק 2
-
-  // חלק 1
-  for (let i = 1; i <= 4; i++) {
-    const sectionData = JSON.parse(sessionStorage.getItem(`q5AnswersSection${i}`)) || {};
-    Object.values(sectionData).forEach(ans => {
-      if (ans.isCorrect) score += 2;
-    });
-  }
-
-  // חלק 2
-  ['textBlob7','textBlob8'].forEach(blob => {
-    const data = JSON.parse(sessionStorage.getItem(blob));
-    if (data && data.correct) score += 2;
-  });
-
-  return { score, maxScore };
-}
-
-function calcQ6Score() {
-  const results = JSON.parse(sessionStorage.getItem("q6Results")) || [];
-  let score = 0;
-  const validBlobs = ["textBlob1","textBlob2","textBlob3","textBlob4","textBlob5"];
-  results.forEach(item => {
-    const cubeNum = parseInt(item.cube.replace("cubeTag",""));
-    if (cubeNum === 5 || cubeNum === 6) return;
-    if (validBlobs.includes(item.attachedTo)) score += 1;
-  });
-  return { score, maxScore: 5 };
-}
-
-function calcQ7Score() {
-  let score = 0;
-  const pointsPerCorrect = 3;
-  for (let i = 1; i <= 10; i++) {
-    const stepData = JSON.parse(sessionStorage.getItem(`Q7_step_${i}`));
-    if (stepData && stepData.correct) score += pointsPerCorrect;
-  }
-  return { score, maxScore: 30 };
-}
-
-// ===== חיבור כל השאלות =====
-const allScores = [
-  calcQ1Score(),
-  calcQ2Score(),
-  calcQ3Score(),
-  calcQ4Score(),
-  calcQ5Score(),
-  calcQ6Score(),
-  calcQ7Score()
-];
-
-// ===== הצגת הניקוד ב־div המתאים =====
-allScores.forEach((q, idx) => {
-  const div = document.querySelector(`.q${idx + 1}`);
-  if (div) div.textContent = `${q.score} / ${q.maxScore}`;
-});
-
-// ===== אם רוצים להציג סך הכל במקום אחר =====
-const totalScore = allScores.reduce((acc, q) => acc + q.score, 0);
-const totalMaxScore = allScores.reduce((acc, q) => acc + q.maxScore, 0);
-// לדוגמה, אם יש div עם class="totalScore":
-// const totalDiv = document.querySelector('.totalScore');
-// if(totalDiv) totalDiv.textContent = `${totalScore} / ${totalMaxScore}`;

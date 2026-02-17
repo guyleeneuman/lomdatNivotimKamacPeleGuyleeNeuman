@@ -79,6 +79,7 @@ body {
     position: absolute;
     top: 60%;
     left: 50%;
+    width:40%;
     transform: translateX(-50%);
 }
 
@@ -96,7 +97,7 @@ body {
 .scoreInfo {
     color: #014725;
     position: absolute;
-    top: 60%;
+    top: 62%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
