@@ -95,7 +95,7 @@ body {
 
 .chartTop {
     position: absolute;      
-    top: 59%;              
+    top: 55%;              
     left: 50%;    
     width: 110%;          
     transform: translateX(-50%); 
@@ -110,7 +110,7 @@ body {
 
 .options {
     position: absolute;
-    top: 66%;
+    top: 65%;
     left: 10.4%;
     left: 50%;              
     transform: translateX(-50%); 
@@ -145,7 +145,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 120%;
-    top: 64%;
+    top: 63%;
     z-index: 10;
 
 }
@@ -174,7 +174,7 @@ body {
     text-align: center;            
     outline: none;   
     bottom: 0%;  
-    height: 10%;             
+    height: 13%;             
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
     z-index: 20000;
 }
@@ -216,7 +216,7 @@ body {
   .answerCInput {
     width: 52vw;       /* קטן ומאוזן */
     /* max-width: 90px; */
-    height: 44px;      /* טאץ׳ תקני */
+    height: 63px;      /* טאץ׳ תקני */
     font-size: 1rem;
     padding: 3px 3px;
   }
@@ -515,7 +515,7 @@ body {
 
 .madQ {
     position: absolute;
-    top: 57%;
+    top: 53%;
     width: 60%; 
     left: 50%;
     transform: translateX(-50%);
