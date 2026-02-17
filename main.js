@@ -298,7 +298,7 @@ if (textDiv && startButton && overButton && nextInstruction) {
 const timerElement = document.getElementById("timerQ1");
 
 if (timerElement) {
-  let timeLeft = 60; 
+  let timeLeft = 90; 
 
   const timerInterval = setInterval(() => {
     let minutes = Math.floor(timeLeft / 60);
@@ -435,7 +435,7 @@ if (answer1Input && answer2Input && answer3Input && answer4Input) {
 const timerElementQ2 = document.getElementById("timerQ2");
 
 if (timerElementQ2) {
-  let timeLeftQ2 = 90; 
+  let timeLeftQ2 = 120; 
 
   const timerIntervalQ2 = setInterval(() => {
     let minutes = Math.floor(timeLeftQ2 / 60);
@@ -505,7 +505,7 @@ if (q3Radios.length > 0) {
 const timerElementQ3 = document.getElementById("timerQ3");
 
 if (timerElementQ3) {
-  let timeLeftQ3 = 60; 
+  let timeLeftQ3 = 90; 
 
   const timerIntervalQ3 = setInterval(() => {
     let minutes = Math.floor(timeLeftQ3 / 60);
@@ -534,7 +534,7 @@ function goToNextQuestionQ3() {
 const timerElementQ4 = document.getElementById("timerQ4");
 
 if (timerElementQ4) {
-  let timeLeftQ4 = 60; 
+  let timeLeftQ4 = 90; 
 
   const timerIntervalQ4 = setInterval(() => {
     let minutes = Math.floor(timeLeftQ4 / 60);
@@ -628,7 +628,7 @@ function goToNextQuestionQ5() {
 const timerElementQ6 = document.getElementById("timerQ6");
 
 if (timerElementQ6) {
-  let timeLeftQ6 = 150; 
+  let timeLeftQ6 = 180; 
 
   const timerIntervalQ6 = setInterval(() => {
     let minutes = Math.floor(timeLeftQ6 / 60);
@@ -657,7 +657,7 @@ function goToNextQuestionQ6() {
 const timerElementQ7 = document.getElementById("timerQ7");
 
 if (timerElementQ7) {
-  let timeLeftQ7 = 300; 
+  let timeLeftQ7 = 330; 
 
   const timerIntervalQ7 = setInterval(() => {
     let minutes = Math.floor(timeLeftQ7 / 60);
@@ -1078,6 +1078,31 @@ nextBtn.addEventListener("keydown", e => {
 load(current);
 
   });
+  
+// ===== Question Timer Q52 =====
+const timerElementQ52 = document.getElementById("timerQ52");
+
+if (timerElementQ52) {
+  let timeLeftQ52 = 420;
+
+  const timerIntervalQ52 = setInterval(() => {
+    let minutes = Math.floor(timeLeftQ52 / 60);
+    let seconds = timeLeftQ52 % 60;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    timerElementQ52.textContent = `${minutes}:${seconds}`;
+
+    if (timeLeftQ52 === 0) {
+      clearInterval(timerIntervalQ52);
+      window.location.href = "q51.html"; 
+    }
+
+    timeLeftQ52--;
+  }, 1000);
+}
+
 // =======================
 // ===== חישוב ניקוד Q5 =====
 // =======================
@@ -1302,7 +1327,7 @@ sessionStorage.setItem(
 const timerElementQ51 = document.getElementById("timerQ51");
 
 if (timerElementQ51) {
-  let timeLeftQ51 = 120; 
+  let timeLeftQ51 = 150; 
 
   const timerIntervalQ51 = setInterval(() => {
     let minutes = Math.floor(timeLeftQ51 / 60);
@@ -1316,15 +1341,16 @@ if (timerElementQ51) {
 
     if (timeLeftQ51 === 0) {
       clearInterval(timerIntervalQ51);
-      nextQ.click();
-
+      goToNextQuestionQ51();
     }
 
     timeLeftQ51--;
   }, 1000);
 }
-// 
-
+// פונקציה למעבר אוטומטי לעמוד הבא
+function goToNextQuestionQ51() {
+  window.location.href = "q6.html"; // העמוד הבא
+}
   loadAnswers();
   changeTaza(currentSection);
 });
