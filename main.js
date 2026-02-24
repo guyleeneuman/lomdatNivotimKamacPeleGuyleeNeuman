@@ -941,10 +941,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!q5NextBtn) return;
 
   const q5Sections = [
-    { taza:"assets/elements/taza1.png", answerB:{min:230,max:240}, answerA:{min:340,max:390} },
-    { taza:"assets/elements/taza2.png", answerB:{min:100,max:110}, answerA:{min:700,max:750} },
+    { taza:"assets/elements/taza1.png", answerB:{min:50,max:60}, answerA:{min:1680,max:1730} },
+    { taza:"assets/elements/taza2.png", answerB:{min:100,max:110}, answerA:{min:1370,max:1420} },
     { taza:"assets/elements/taza3.png", answerB:{min:76,max:84},   answerA:{min:1800,max:2000} },
-    { taza:"assets/elements/taza4.png", answerB:{min:280,max:290}, answerA:{min:550,max:600} }
+    { taza:"assets/elements/taza4.png", answerB:{min:280,max:290}, answerA:{min:675,max:625} }
   ];
 
   let current = 0;
@@ -1012,10 +1012,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!input || !nextBtn) return;
 
   const sections = [
-    { taza:"assets/elements/taza1.png", special:[{first3:"694",min:48,max:68},{first3:"442",min:61,max:81}] },
-    { taza:"assets/elements/taza2.png", special:[{first3:"694",min:28,max:48},{first3:"441",min:52,max:72}] },
+    { taza:"assets/elements/taza1.png", special:[{first3:"694",min:57,max:77},{first3:"442",min:78,max:98}] },
+    { taza:"assets/elements/taza2.png", special:[{first3:"694",min:38,max:58},{first3:"441",min:59,max:79}] },
     { taza:"assets/elements/taza3.png", special:[{first3:"694",min:68,max:88},{first3:"442",min:0,max:40}] },
-    { taza:"assets/elements/taza4.png", special:[{first3:"692",min:45,max:65},{first3:"441",min:2,max:22}] }
+    { taza:"assets/elements/taza4.png", special:[{first3:"692",min:47,max:67},{first3:"442",min:8,max:28}] }
   ];
 
   let current = 0;
@@ -1141,8 +1141,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextQ = document.querySelector(".nextQ");
   let blob7Cube = null;
   let blob8Cube = null;
-  const correctAnswersBlob7 = ["cube1", "cube3", "cube3","cube8"];
-  const correctAnswersBlob8 = ["cube2", "cube4", "cube9","cube2" ];
+  const correctAnswersBlob7 = ["cube7", "cube6", "cube9","cube2"];
+  const correctAnswersBlob8 = ["cube4", "cube3", "cube3","cube8" ];
 
   let draggedCube = null;
   let offsetX = 0;
