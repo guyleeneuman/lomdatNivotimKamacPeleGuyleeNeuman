@@ -943,7 +943,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const q5Sections = [
     { taza:"assets/elements/taza1.png", answerB:{min:230,max:240}, answerA:{min:340,max:390} },
     { taza:"assets/elements/taza2.png", answerB:{min:100,max:110}, answerA:{min:700,max:750} },
-    { taza:"assets/elements/taza3.png", answerB:{min:80,max:90},   answerA:{min:2100,max:2300} },
+    { taza:"assets/elements/taza3.png", answerB:{min:76,max:84},   answerA:{min:1800,max:2000} },
     { taza:"assets/elements/taza4.png", answerB:{min:280,max:290}, answerA:{min:550,max:600} }
   ];
 
@@ -1014,7 +1014,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sections = [
     { taza:"assets/elements/taza1.png", special:[{first3:"694",min:48,max:68},{first3:"442",min:61,max:81}] },
     { taza:"assets/elements/taza2.png", special:[{first3:"694",min:28,max:48},{first3:"441",min:52,max:72}] },
-    { taza:"assets/elements/taza3.png", special:[{first3:"695",min:29,max:49},{first3:"442",min:2,max:22}] },
+    { taza:"assets/elements/taza3.png", special:[{first3:"694",min:68,max:88},{first3:"442",min:0,max:40}] },
     { taza:"assets/elements/taza4.png", special:[{first3:"692",min:45,max:65},{first3:"441",min:2,max:22}] }
   ];
 
@@ -1141,8 +1141,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextQ = document.querySelector(".nextQ");
   let blob7Cube = null;
   let blob8Cube = null;
-  const correctAnswersBlob7 = ["cube1", "cube3", "cube5","cube8"];
-  const correctAnswersBlob8 = ["cube2", "cube4", "cube6","cube2" ];
+  const correctAnswersBlob7 = ["cube1", "cube3", "cube3","cube8"];
+  const correctAnswersBlob8 = ["cube2", "cube4", "cube9","cube2" ];
 
   let draggedCube = null;
   let offsetX = 0;
