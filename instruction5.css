@@ -608,13 +608,14 @@ body {
     position: absolute;
     top: 22%;
     left: 50%;
+
     transform: translateX(-50%);
 
 }
 .frame{
     position: relative;
     left: 50%;
-    width: 120%;
+    width: 140%;
     transform: translateX(-50%);
 }
 
@@ -634,6 +635,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     color: #024826;
-    width: 48vw;
-    font-size: 1.5rem;
+    height: vh;
+    width: 60vw;
+  font-size: 1.5rem;
 }
