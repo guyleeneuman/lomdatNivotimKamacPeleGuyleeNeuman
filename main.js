@@ -862,68 +862,68 @@ let startX, startY, imgX = 0, imgY = 0;
 let currentRotation = 0;
 let initialAngle = 0;
 
-if (qoardinatot) {
-  qoardinatot.style.position = "absolute";
-  qoardinatot.style.touchAction = "none"; // למנוע גלילה בעת גרירה
+// if (qoardinatot) {
+//   qoardinatot.style.position = "absolute";
+//   qoardinatot.style.touchAction = "none"; // למנוע גלילה בעת גרירה
 
-  // --- גרירה ---
-  const startDrag = (x, y) => {
-    isDragging = true;
-    startX = x - imgX;
-    startY = y - imgY;
-  };
+//   // --- גרירה ---
+//   const startDrag = (x, y) => {
+//     isDragging = true;
+//     startX = x - imgX;
+//     startY = y - imgY;
+//   };
 
-  const moveDrag = (x, y) => {
-    if (!isDragging) return;
-    imgX = x - startX;
-    imgY = y - startY;
-    qoardinatot.style.left = imgX + "px";
-    qoardinatot.style.top = imgY + "px";
-  };
+//   const moveDrag = (x, y) => {
+//     if (!isDragging) return;
+//     imgX = x - startX;
+//     imgY = y - startY;
+//     qoardinatot.style.left = imgX + "px";
+//     qoardinatot.style.top = imgY + "px";
+//   };
 
-  const stopDrag = () => {
-    isDragging = false;
-  };
+//   const stopDrag = () => {
+//     isDragging = false;
+//   };
 
-  // --- סיבוב עבור שתי אצבעות ---
-  const rotateTouch = (touches) => {
-    const dx = touches[1].clientX - touches[0].clientX;
-    const dy = touches[1].clientY - touches[0].clientY;
-    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+//   // --- סיבוב עבור שתי אצבעות ---
+//   const rotateTouch = (touches) => {
+//     const dx = touches[1].clientX - touches[0].clientX;
+//     const dy = touches[1].clientY - touches[0].clientY;
+//     const angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
-    if (!initialAngle && initialAngle !== 0) initialAngle = angle - currentRotation;
+//     if (!initialAngle && initialAngle !== 0) initialAngle = angle - currentRotation;
 
-    currentRotation = angle - initialAngle;
-    qoardinatot.style.transform = `rotate(${currentRotation}deg)`;
-  };
+//     currentRotation = angle - initialAngle;
+//     qoardinatot.style.transform = `rotate(${currentRotation}deg)`;
+//   };
 
-  // --- Mouse events ---
-  qoardinatot.addEventListener("mousedown", e => startDrag(e.clientX, e.clientY));
-  document.addEventListener("mousemove", e => moveDrag(e.clientX, e.clientY));
-  document.addEventListener("mouseup", stopDrag);
+//   // --- Mouse events ---
+//   qoardinatot.addEventListener("mousedown", e => startDrag(e.clientX, e.clientY));
+//   document.addEventListener("mousemove", e => moveDrag(e.clientX, e.clientY));
+//   document.addEventListener("mouseup", stopDrag);
 
-  // --- Touch events ---
-  qoardinatot.addEventListener("touchstart", e => {
-    if (e.touches.length === 1) {
-      const touch = e.touches[0];
-      startDrag(touch.clientX, touch.clientY);
-    }
-  });
+//   // --- Touch events ---
+//   qoardinatot.addEventListener("touchstart", e => {
+//     if (e.touches.length === 1) {
+//       const touch = e.touches[0];
+//       startDrag(touch.clientX, touch.clientY);
+//     }
+//   });
 
-  document.addEventListener("touchmove", e => {
-    if (e.touches.length === 1) {
-      const touch = e.touches[0];
-      moveDrag(touch.clientX, touch.clientY);
-    } else if (e.touches.length === 2) {
-      rotateTouch(e.touches);
-    }
-  });
+//   document.addEventListener("touchmove", e => {
+//     if (e.touches.length === 1) {
+//       const touch = e.touches[0];
+//       moveDrag(touch.clientX, touch.clientY);
+//     } else if (e.touches.length === 2) {
+//       rotateTouch(e.touches);
+//     }
+//   });
 
-  document.addEventListener("touchend", e => {
-    stopDrag();
-    if (e.touches.length < 2) initialAngle = 0;
-  });
-}
+//   document.addEventListener("touchend", e => {
+//     stopDrag();
+//     if (e.touches.length < 2) initialAngle = 0;
+//   });
+// }
 
 // ===== Main Q5 & Q51 Logic =====
 
@@ -1566,31 +1566,41 @@ function saveStepResult() {
 }
 
 
-  // ---------- NEXT BUTTON SAFE ----------
-  const cleanNextBtn = nextBtn.cloneNode(true);
-  nextBtn.parentNode.replaceChild(cleanNextBtn, nextBtn);
+ 
+// ---------- NEXT BUTTON SAFE ----------
+const cleanNextBtn = nextBtn.cloneNode(true);
+nextBtn.parentNode.replaceChild(cleanNextBtn, nextBtn);
 
-  cleanNextBtn.addEventListener("click", () => {
-    saveStepResult();
+cleanNextBtn.addEventListener("click", () => {
+  saveStepResult();
 
-    if (currentStep === totalSteps) {
+  // ===== אם זה השלב האחרון =====
+  if (currentStep === totalSteps) {
+
+    // 💥 שליחה למייל
+    sendResultsEmail();
+
+    // נותנים זמן לשליחה לפני מעבר
+    setTimeout(() => {
       window.location.href = "result.html";
-      return;
-    }
+    }, 1000);
 
-    if (currentStep === totalSteps - 1) {
-      cleanNextBtn.src = "assets/buttons/checkWrongBtn.png";
-    }
+    return;
+  }
 
-    currentStep++;
-    resetCubes();
-    highlightCurrentCircle();
-  });
+  // שינוי כפתור בשלב לפני אחרון
+  if (currentStep === totalSteps - 1) {
+    cleanNextBtn.src = "assets/buttons/checkWrongBtn.png";
+  }
 
-  // ---------- INIT ----------
+  currentStep++;
+  resetCubes();
   highlightCurrentCircle();
-})();
+});
 
+// ---------- INIT ----------
+highlightCurrentCircle();
+})();
 // // ===== חישוב ניקוד Q7 =====
 // function calcQ7Score() {
 //   const pointsPerCorrectDrag = 3;
@@ -1700,4 +1710,44 @@ if (personalInfoDiv) {
   } else {
     personalInfoDiv.textContent = "פרטים אישיים לא זמינים";
   }
+}
+
+function sendResultsEmail() {
+  const fullName = sessionStorage.getItem('fullName');
+  const personalNum = sessionStorage.getItem('personalNum');
+  const userClass = sessionStorage.getItem('userClass');
+  const platoon = sessionStorage.getItem('platoon');
+  const company = sessionStorage.getItem('company');
+
+  const scores = getAllScores();
+
+  const totalScore = scores.reduce((a, b) => a + b.score, 0);
+  const totalMax = scores.reduce((a, b) => a + b.maxScore, 0);
+
+  let details = "";
+  scores.forEach((q, i) => {
+    details += `שאלה ${i + 1}: ${q.score} / ${q.maxScore}\n`;
+  });
+
+  const templateParams = {
+    fullName,
+    personalNum,
+    userClass,
+    platoon,
+    company,
+    totalScore: `${totalScore} / ${totalMax}`,
+    details
+  };
+
+  return emailjs.send("service_zn8idxu", "template_tvc0aig", templateParams)
+    .then((res) => {
+      sessionStorage.setItem("emailStatus", "sent");
+      sessionStorage.setItem("emailResponse", JSON.stringify(res));
+      return res;
+    })
+    .catch((err) => {
+      sessionStorage.setItem("emailStatus", "failed");
+      sessionStorage.setItem("emailError", JSON.stringify(err));
+      return err;
+    });
 }

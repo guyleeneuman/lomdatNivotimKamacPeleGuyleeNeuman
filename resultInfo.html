@@ -25,7 +25,14 @@
 <div class="q5">XX</div>
 <div class="q6">XX</div>
 <div class="q7">XX</div>
- 
+ <!-- <div id="storageDisplay" style="position:fixed;bottom:10px;left:10px;background:#fff;border:1px solid #000;padding:10px;max-height:200px;overflow:auto;z-index:10000;"></div> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  emailjs.init("Ak1OHw83c5xwHhhHd");
+</script>
+
 <script src="main.js"></script>
 </body>
 </html>
@@ -33,4 +40,15 @@
 function goToResult() {
     window.location.href = "result.html";
 }
+// function displayStorage() {
+//   const display = document.getElementById("storageDisplay");
+//   display.innerHTML = "";
+//   for (let i = 0; i < sessionStorage.length; i++) {
+//     const key = sessionStorage.key(i);
+//     const value = sessionStorage.getItem(key);
+//     display.innerHTML += `<b>${key}</b>: ${value}<br>`;
+//  }
+//  }
+// setInterval(displayStorage, 1000); // יעדכן כל שנייה
+
 </script>

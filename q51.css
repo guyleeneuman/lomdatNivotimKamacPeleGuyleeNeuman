@@ -311,7 +311,7 @@ body {
 }
 
 /* מיקומים ורוחב – יחסיים ל-options */
-.cube1 { top: 82%; left: 5%;  width: clamp(50px, 10%, 70px);  }
+.cube1 { top: 82%; left: 15%;  width: clamp(50px, 10%, 70px);  }
 .cube2 { top: 73.5%; left: 2%;  width: clamp(60px, 12%, 80px); }
 .cube3 { top: 73.5%; left: 83%; width: clamp(50px, 10%, 70px); }
 .cube4 { top: 73.5%; left: 69%; width: clamp(50px, 10%, 70px); }
@@ -319,7 +319,7 @@ body {
 .cube6 { top: 82%; left: 68%; width: clamp(100px, 18%, 150px); }
 .cube7 { top: 81%; left: 53%; width: clamp(50px, 10%, 70px); }
 .cube8 { top: 72%; left: 42%; width: clamp(100px, 20%, 160px); height: clamp(45px, 8%, 70px); }
-.cube9 { top: 81%; left: 23%; width: clamp(90px, 15%, 130px); }
+.cube9 { top: 81%; left: 33%; width: clamp(60px, 10%, 70px); }
 
 
 /* .textBlob7,.textBlob8 {
